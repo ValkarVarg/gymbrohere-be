@@ -1,0 +1,16 @@
+{
+  "expo": {
+    "name": "gymbrohero-be",
+    "slug": "gymbrohero-be",
+    "version": "1.0.0",
+    "description": "",
+    "sdkVersion": "51.0.0",
+    "platforms": [],
+    "android": {
+      "package": "com.anonymous.gymbroherobe"
+    },
+    "ios": {
+      "bundleIdentifier": "com.anonymous.gymbroherobe"
+    }
+  }
+}
