@@ -3,7 +3,22 @@ const format = require("pg-format");
 
 const seed = () => {
   return db
-    .query(`DROP TABLE IF EXISTS users;`)
+    .query(`DROP TABLE IF EXISTS usersItems;`)
+    .then(() => {
+      return db.query(`DROP TABLE IF EXISTS availableItems;`);
+    })
+    .then(() => {
+      return db.query(`DROP TABLE IF EXISTS individualWorkout;`);
+    })
+    .then(() => {
+      return db.query(`DROP TABLE IF EXISTS exercises;`);
+    })
+    .then(() => {
+      return db.query(`DROP TABLE IF EXISTS workoutPlans;`);
+    })
+    .then(() => {
+      return db.query(`DROP TABLE IF EXISTS users;`);
+    })
     .then(() => {
       return db.query(`DROP TABLE IF EXISTS usersLogin;`);
     })
@@ -21,6 +36,12 @@ const seed = () => {
     )
     .then(()=> 
       {return createIndividualWorkout()}
+    )
+    .then(()=> 
+      {return createAvailableItems()}
+    )
+    .then(()=> 
+      {return createUserItems()}
     );
 
   function createUsersLogin() {
@@ -68,6 +89,20 @@ function createIndividualWorkout(){
     reps INT NOT NULL, 
     weight INT 
     )`)
+}
+function createAvailableItems() {
+  return db.query(`CREATE TABLE availableItems 
+    (item_id SERIAL PRIMARY KEY, 
+    item_name VARCHAR(50),
+    item_img VARCHAR(100), 
+    level_available INT NOT NULL)`)
+}
+function createUserItems() {
+  return db.query(`CREATE TABLE usersItems
+    (users_item_row_id SERIAL PRIMARY KEY, 
+     user_id INT REFERENCES usersLogin(user_id), 
+     item_id INT REFERENCES availableItems (item_id), 
+     display_location VARCHAR(5))`)
 }
 
 };
