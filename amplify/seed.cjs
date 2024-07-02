@@ -1,7 +1,7 @@
 const db = require("./connection.cjs");
 const format = require("pg-format");
 
-const seed = () => {
+const seed = ({usersData, usersLoginData}) => {
   return db
     .query(`DROP TABLE IF EXISTS usersItems;`)
     .then(() => {
@@ -42,6 +42,12 @@ const seed = () => {
     )
     .then(()=> 
       {return createUserItems()}
+    )
+    .then(()=> 
+      {return populateUsersLogin(usersLoginData)}
+    )
+    .then(()=> 
+      {return populateUsers(usersData)}
     );
 
   function createUsersLogin() {
@@ -106,5 +112,44 @@ function createUserItems() {
 }
 
 };
+
+
+function populateUsersLogin(usersLogin) {
+  const insertUserLoginData = format(
+    `INSERT INTO usersLogin 
+					(username, password, email)
+					VALUES %L
+					RETURNING *;`,
+    formatUsersLogin(usersLogin)
+  );
+  return db.query(insertUserLoginData);
+}
+
+function formatUsersLogin(usersLogin) {
+  const formattedUserLoginData = usersLogin.map((userLogin) => {
+    return [userLogin.username, userLogin.password, userLogin.email];
+  });
+  return formattedUserLoginData;
+}
+
+
+function populateUsers(users) {
+  const insertUserData = format(
+    `INSERT INTO users 
+					(user_id, birthdate, height, weight, goal, avatar_body, avatar_hair_shape, avatar_hair_colour, avatar_skin_colour, avatar_shirt_colour)
+					VALUES %L
+					RETURNING *;`,
+    formatUsers(users)
+  );
+  return db.query(insertUserData);
+}
+
+function formatUsers(users) {
+  const formattedUserData = users.map((user) => {
+    return [user.user_id, user.birthdate, user.height, user.weight, user.goal, user.avatar_body, user.avatar_hair_shape, user.avatar_hair_colour, user.avatar_skin_colour, user.avatar_shirt_colour];
+  });
+  return formattedUserData;
+}
+
 
 module.exports = { seed };
