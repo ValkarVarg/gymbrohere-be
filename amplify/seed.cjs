@@ -13,7 +13,15 @@ const seed = () => {
     .then(() => {
       return createUsers();
     })
-    .then(()=> {console.log("end")});
+    .then(()=> 
+      {return createWorkoutPlans ()}
+    )
+    .then(()=> 
+      {return createExercises()}
+    )
+    .then(()=> 
+      {return createIndividualWorkout()}
+    );
 
   function createUsersLogin() {
     return db.query(`CREATE TABLE usersLogin 
@@ -37,6 +45,31 @@ const seed = () => {
   avatar_shirt_colour INT NOT NULL
 );`);
   }
+ function createWorkoutPlans() {
+  return db.query(`CREATE TABLE workoutPlans
+    (workout_plan_id SERIAL PRIMARY KEY, 
+    workout_plan_name VARCHAR(50) NOT NULL, 
+    user_id INT REFERENCES usersLogin(user_id)
+    )`)
+ }
+function createExercises() {
+  return db.query(`CREATE TABLE exercises
+    (exercise_id SERIAL PRIMARY KEY, 
+    exercise_name VARCHAR(50) NOT NULL, 
+    exercise_instructions VARCHAR(200))`)
+}
+function createIndividualWorkout(){
+  return db.query(`CREATE TABLE individualWorkout 
+    (individual_workout_row_id SERIAL PRIMARY KEY, 
+    workout_plan_id INT REFERENCES workoutPlans(workout_plan_id), 
+    order_id INT NOT NULL, 
+    exercise_id INT REFERENCES exercises(exercise_id), 
+    set_id INT NOT NULL, 
+    reps INT NOT NULL, 
+    weight INT 
+    )`)
+}
+
 };
 
 module.exports = { seed };
