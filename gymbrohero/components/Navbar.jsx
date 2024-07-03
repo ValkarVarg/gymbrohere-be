@@ -7,6 +7,7 @@ import { SettingsScreen } from '../screens/SettingsScreen';
 import { WorkoutsScreen } from '../screens/WorkoutsScreen';
 import { CreateWorkoutScreen } from '../screens/CreateWorkoutScreen';
 import { StatsScreen } from '../screens/StatsScreen';
+import { RunningWorkout } from '../screens/RunningWorkout';
 
 const Tab = createBottomTabNavigator();
 const screenOptions = { headerShown: false };
