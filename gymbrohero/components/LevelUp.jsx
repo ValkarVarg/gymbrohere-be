@@ -1,16 +1,20 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, Button, Pressable } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 
-export const LevelUp = () => {
+export const LevelUp = (props) => {
 
+        const closeWindow = () => {
+            props.setClosedLevelUp(true)
+        }
 
     return (<View style={styles.container}>
         <View style={styles.box}>
         <Image source={require('../images/Bro.png')} style={styles.image} resizeMode="cover"></Image>
         <Text style={styles.text}>You Levelled up bro!</Text>
         <Text style={styles.text}>New Items unlocked in store</Text>
+        {/* <Text style={styles.text}>{props.closedLevelUp ? 'true' : 'false'}</Text> */}
         <View style= {styles.button}>
-        <Pressable >
+        <Pressable onPress={closeWindow}>
         <Text >x</Text>
         </Pressable>
         </View>
