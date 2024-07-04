@@ -1,21 +1,39 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import React from "react";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 import Timer from "../components/Timer";
 
+const ExerciseItem = ({ exercise, isLast }) => (
+  <View style={[styles.item, !isLast && styles.itemBorder]}>
+    <Text style={[styles.exerciseName, styles.bold]}>
+      {exercise.exerciseName}
+    </Text>
+    <View style={styles.exerciseStats}>
+      <Text>Sets: {exercise.sets}</Text>
+      <Text>Reps: {exercise.reps}</Text>
+      <Text>Weight: {exercise.weight}</Text>
+    </View>
+  </View>
+);
+
 export const RunningWorkout = ({ route }) => {
-  const { testData } = route.params;
-  const workout = testData[0];
+  const { workout } = route.params;
   return (
     <View style={styles.container}>
       <Text style={[styles.header, styles.bold]}>
         {workout.workout_name} in progress!
       </Text>
       <Timer />
-      <View style={[styles.container, styles.box]}>
-        <Text>{workout.workout_stack[0].exerciseName}</Text>
-        <Text>Sets: {workout.workout_stack[0].sets}</Text>
-        <Text>Reps: {workout.workout_stack[0].reps}</Text>
-        <Text>Weight: {workout.workout_stack[0].weight}</Text>
+      <View style={styles.flatListContainer}>
+        <FlatList
+          data={workout.workout_stack}
+          renderItem={({ item, index }) => (
+            <ExerciseItem
+              exercise={item}
+              isLast={index === workout.workout_stack.length - 1}
+            />
+          )}
+          keyExtractor={(item) => item.exerciseName}
+        />
       </View>
     </View>
   );
@@ -23,6 +41,7 @@ export const RunningWorkout = ({ route }) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 10,
   },
   bold: {
@@ -33,29 +52,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 15,
   },
-  workoutControls: {
-    flexDirection: "row",
-    width: 200,
-  },
-  button: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 10,
-    borderRadius: 5,
-    marginHorizontal: 5,
-  },
-  startButton: {
-    backgroundColor: "green",
-  },
-  deleteButton: {
-    backgroundColor: "red",
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "bold",
-  },
-  box: {
+  flatListContainer: {
     borderColor: "grey",
     borderWidth: 3,
     borderRadius: 5,
@@ -82,3 +79,5 @@ const styles = StyleSheet.create({
     gap: 10,
   },
 });
+
+
