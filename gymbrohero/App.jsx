@@ -10,6 +10,7 @@ import { CreateWorkoutScreen } from './screens/CreateWorkoutScreen';
 import { Navbar } from './components/Navbar';
 import { Topbar } from './components/Navbar';
 import { StatsScreen } from './screens/StatsScreen';
+import { RunningWorkout } from './screens/RunningWorkout';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,7 @@ export default function App() {
 					<Stack.Screen name="Settings" component={SettingsScreen} />
 					<Stack.Screen name="CreateWorkout" component={CreateWorkoutScreen} />
 					<Stack.Screen name="Stats" component={StatsScreen} />
+					<Stack.Screen name="Run Workout" component={RunningWorkout} />
 				</Stack.Navigator>
 			</NavigationContainer>
 		</PaperProvider>

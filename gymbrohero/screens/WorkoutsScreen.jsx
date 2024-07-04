@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Pressable } from 'react-native';
 
 const testData = [
 	{
@@ -36,7 +36,7 @@ const WorkoutItem = ({ workoutName, exerciseName, sets, reps, weight, isLast }) 
 	);
 };
 
-export const WorkoutsScreen = () => {
+export const WorkoutsScreen = ({navigation}) => {
 	return (
 		<View style={styles.container}>
 			<Text style={[styles.header, styles.bold]}>Workouts</Text>
@@ -52,12 +52,12 @@ export const WorkoutsScreen = () => {
 						keyExtractor={(item) => item.exerciseName}
 					/>
 					<View style={styles.workoutControls}>
-						<TouchableOpacity style={[styles.button, styles.startButton]}>
-							<Text style={styles.buttonText}>Y</Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={[styles.button, styles.deleteButton]}>
+						<Pressable onPress = {() => navigation.navigate('Run Workout', {testData})} style={[styles.button, styles.startButton]}>
+							<Text style={styles.buttonText}>Run Workout</Text>
+						</Pressable>
+						<Pressable style={[styles.button, styles.deleteButton]}>
 							<Text style={styles.buttonText}>X</Text>
-						</TouchableOpacity>
+						</Pressable>
 					</View>
 				</View>
 			))}
