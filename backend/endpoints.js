@@ -1,4 +1,5 @@
 const {getUser} = require('./controllers/users.controller')
+const {getWorkouts} = require('./controllers/workouts.controller')
 const express = require("express");
 
 const app = express();
@@ -6,6 +7,8 @@ const app = express();
 app.use(express.json());
 
 app.get("/api/users/:userid", getUser)
+
+app.get("/api/workouts/:userid", getWorkouts)
 
 app.use((err, req, res, next) => {
     if (err.status && err.msg) {

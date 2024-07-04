@@ -1,7 +1,7 @@
 const db = require("./connection.js");
 const format = require("pg-format");
 
-const seed = ({usersData, usersLoginData}) => {
+const seed = ({usersData, usersLoginData, exerciseData}) => {
   return db
     .query(`DROP TABLE IF EXISTS usersItems;`)
     .then(() => {
@@ -48,7 +48,17 @@ const seed = ({usersData, usersLoginData}) => {
     )
     .then(()=> 
       {return populateUsers(usersData)}
-    );
+    )
+    .then(()=> 
+      {return populateExercises(exerciseData)}
+    )
+    .then(()=> 
+      {return populateWorkoutPlans(workoutPlansData)}
+    )
+    .then(()=> 
+      {return populateIndividualWorkouts(individualWorkoutData)}
+    )
+    ;
 
   function createUsersLogin() {
     return db.query(`CREATE TABLE usersLogin 
@@ -149,6 +159,60 @@ function formatUsers(users) {
     return [user.user_id, user.birthdate, user.height, user.weight, user.goal, user.avatar_body, user.avatar_hair_shape, user.avatar_hair_colour, user.avatar_skin_colour, user.avatar_shirt_colour];
   });
   return formattedUserData;
+}
+
+function populateExercises(exercises) {
+  const insertExerciseData = format(
+    `INSERT INTO exercises 
+					(exercise_name, exercise_instructions)
+					VALUES %L
+					RETURNING *;`,
+    formatExercises(exercises)
+  );
+  return db.query(insertExerciseData);
+}
+
+function formatExercises(exercises) {
+  const formattedExerciseData = exercises.map((exercise) => {
+    return [exercise.exercise_name, exercise.exercise_instructions];
+  });
+  return formattedExerciseData;
+}
+
+function populateWorkoutPlans(workoutPlans) {
+  const insertWorkoutPlanData = format(
+    `INSERT INTO workoutPlans 
+					(workout_plan_name, user_id)
+					VALUES %L
+					RETURNING *;`,
+    formatWorkoutPlans(workoutPlans)
+  );
+  return db.query(insertWorkoutPlansData);
+}
+
+function formatWorkoutPlans(workoutPlans) {
+  const formattedWorkoutPlansData = workoutPlans.map((workoutPlan) => {
+    return [workoutPlan.workout_plan_name, workoutPlan.user_id];
+  });
+  return formattedWorkoutPlansData;
+}
+
+function populateIndividualWorkouts(workouts) {
+  const insertWorkoutData = format(
+    `INSERT INTO individualworkout
+					(workout_plan_id, order_id, exercise_id, set_id, reps, weight)
+					VALUES %L
+					RETURNING *;`,
+    formatWorkout(workouts)
+  );
+  return db.query(insertWorkoutData);
+}
+
+function formatWorkout(workouts) {
+  const formattedWorkoutData = workouts.map((workout) => {
+    return [workout.workout_plan_id, workout.order_id, workout.exercise_id, workout.set_id, workout.reps, workout.weight];
+  });
+  return formattedWorkoutData;
 }
 
 

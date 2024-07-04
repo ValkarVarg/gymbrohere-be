@@ -45,3 +45,28 @@ describe("/api/users/:userid", () => {
       });
   });
 });
+
+
+describe("/api/workouts/:userid", () => {
+  test("GET:200 sends an object of workouts to the client", () => {
+    return request(app)
+      .get("/api/workouts/1")
+      .expect(200)
+      .then((response) => {
+        console.log(response.body.workouts)
+        expect(response.body.user).toEqual({
+          user_id: 1,
+          birthdate: "1999-03-12T00:00:00.000Z",
+          height: 180,
+          weight: 120,
+          goal: "get swole",
+          avatar_body: 2,
+          avatar_hair_shape: 1,
+          avatar_hair_colour: 1,
+          avatar_skin_colour: 1,
+          avatar_shirt_colour: 1,
+          username: "Jim",
+        });
+      });
+  });
+})
