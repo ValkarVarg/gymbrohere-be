@@ -11,6 +11,11 @@
     },
     "ios": {
       "bundleIdentifier": "com.anonymous.gymbroherobe"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b1727930-face-4535-bd7a-084fdf8a51c9"
+      }
     }
   }
 }
