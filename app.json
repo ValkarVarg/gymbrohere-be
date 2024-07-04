@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "gymbrohero-be",
-    "slug": "gymbrohero-be",
+    "slug": "gym-bro-hero",
     "version": "1.0.0",
     "description": "",
     "sdkVersion": "51.0.0",
@@ -11,6 +11,12 @@
     },
     "ios": {
       "bundleIdentifier": "com.anonymous.gymbroherobe"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "52e8c93e-2c98-4b41-8b08-600834c1e74e"
+      }
+    },
+    "owner": "thefailbus"
   }
 }
