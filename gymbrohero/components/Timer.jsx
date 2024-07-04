@@ -9,13 +9,22 @@ const Timer = () => {
   const startTimer = () => {
     if (!running) {
       intervalRef.current = setInterval(() => {
-        setTime(prevTime => prevTime + 1);
+        setTime((prevTime) => prevTime + 1);
       }, 1000);
       setRunning(true);
     }
   };
 
   const pauseTimer = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+    setRunning(false);
+  };
+
+  const finishTimer = () => {
+    // Add end workout behaviour here
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
@@ -39,6 +48,9 @@ const Timer = () => {
       </Pressable>
       <Pressable onPress={pauseTimer}>
         <Text>Pause</Text>
+      </Pressable>
+      <Pressable onPress={finishTimer}>
+        <Text>Finish Workout</Text>
       </Pressable>
     </View>
   );
