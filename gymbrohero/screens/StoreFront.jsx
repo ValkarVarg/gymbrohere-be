@@ -8,6 +8,7 @@ import {
   FlatList,
 } from "react-native";
 import { Items } from "../components/Items";
+import { GridScreen } from "./GridScreen";
 
 const testItems = [
   { id: "1", source: require("../images/Bro.png"), isUnlocked: true },
@@ -37,12 +38,15 @@ export const StoreFront = () => {
   ));
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={availableItems}
-        renderItem={({ item }) => item}
-        keyExtractor={(item) => item.id}
-      />
+    <View>
+      <View style={styles.container}>
+        <FlatList
+          data={availableItems}
+          renderItem={({ item }) => item}
+          keyExtractor={(item) => item.id}
+        />
+      </View>
+      <GridScreen />
     </View>
   );
 };
