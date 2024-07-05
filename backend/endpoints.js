@@ -1,4 +1,4 @@
-const { getUser, postUserLogin, postUser } = require('./controllers/users.controller');
+const { getUser, getUserLogin, postUserLogin, postUser } = require('./controllers/users.controller');
 const { getWorkouts, getIndividualWorkout } = require('./controllers/workouts.controller');
 
 const express = require('express');
@@ -9,13 +9,15 @@ app.use(express.json());
 
 app.get('/api/users/:userid', getUser);
 
+app.get('/api/userlogin/:username', getUserLogin);
+
 app.get('/api/workouts/:userid', getWorkouts);
 
 app.get('/api/individualworkouts/:workout_id', getIndividualWorkout);
 
-app.post('/api/userlogin', postUserLogin)
+app.post('/api/userlogin', postUserLogin);
 
-app.post('/api/users/:user_id', postUser)
+app.post('/api/users/:user_id', postUser);
 
 app.use((err, req, res, next) => {
 	if (err.status && err.msg) {

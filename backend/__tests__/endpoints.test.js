@@ -131,7 +131,7 @@ describe('/api/individualworkouts/:workout_id', () => {
 	});
 });
 
-describe('/api/userslogin', () => {
+describe('/api/userlogin', () => {
 	test('POST: 201 post new user account', () => {
 		const userLogin = {
 			username: 'santa',
@@ -189,7 +189,7 @@ describe('/api/userslogin', () => {
 					});
 			});
 	});
-  test('POST: 400 returns error if email is already taken', () => {
+	test('POST: 400 returns error if email is already taken', () => {
 		const userLogin1 = {
 			username: 'santa',
 			password: 'hohoho',
@@ -212,6 +212,29 @@ describe('/api/userslogin', () => {
 					.then(({ body }) => {
 						expect(body.msg).toBe('Bad Request');
 					});
+			});
+	});
+	test('GET: 200 get user login by username', () => {
+		const username = 'Jim';
+		return request(app)
+			.get(`/api/userlogin/${username}`)
+			.expect(200)
+			.then(({ body }) => {
+				expect(body.userLogin).toMatchObject({
+					username: 'Jim',
+					password: 'password',
+					email: 'jim@yahoo.com',
+					user_id: 1,
+				});
+			});
+	});
+	test('GET: 404 returns error if user not found', () => {
+		const username = 'nonexistentuser';
+		return request(app)
+			.get(`/api/userlogin/${username}`)
+			.expect(404)
+			.then(({ body }) => {
+				expect(body.msg).toBe('Not Found');
 			});
 	});
 });
