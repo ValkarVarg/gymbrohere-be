@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from 'react';
 import { StyleSheet, View } from "react-native";
 import { PaperProvider } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
@@ -12,14 +12,28 @@ import { Topbar } from "./components/Navbar";
 import { StatsScreen } from "./screens/StatsScreen";
 import { RunningWorkout } from "./screens/RunningWorkout";
 import { StoreFront } from "./screens/StoreFront";
+import { LandingPage } from "./screens/LandingPage";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
+  const [userId, setUserId] = useState(null);
+
+  const handleLogin = (id) => {
+    setUserId(id);
+  };
+
   return (
     <PaperProvider>
       <NavigationContainer>
-        <Stack.Navigator>
+      <Stack.Navigator initialRouteName="LandingPage">
+      <Stack.Screen
+            name="LandingPage"
+            options={{ headerShown: false }}
+          >
+            {props => <LandingPage {...props} handleLogin={handleLogin} />}
+          </Stack.Screen>
           <Stack.Screen
             name="Main"
             component={Navbar}
