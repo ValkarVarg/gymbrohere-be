@@ -11,7 +11,7 @@ import {
 import { Formik } from "formik";
 
 export const UserSetup = () => {
-  const [userImage, setUserImage] = useState("../images/Bro.png");
+  const [userImage, setUserImage] = useState(require("../images/Bro.png"));
 
   return (
     <Formik
