@@ -75,3 +75,58 @@ describe('/api/workouts/:userid', () => {
 			});
 	});
 });
+
+describe('/api/individualworkouts/:workout_id', () => {
+	test('GET: 200 responds with an individual workout array of set objects', () => {
+		return request(app)
+			.get('/api/individualworkouts/1')
+			.expect(200)
+			.then((response) => {
+				expect(response.body.workout).toEqual([
+					{
+						workout_plan_id: 1,
+						individual_workout_row_id: 1,
+						order_id: 1,
+						exercise_id: 1,
+						set_id: 1,
+						reps: 10,
+						weight: 100,
+					},
+					{
+						workout_plan_id: 1,
+						individual_workout_row_id: 2,
+						order_id: 1,
+						exercise_id: 1,
+						set_id: 2,
+						reps: 10,
+						weight: 100,
+					},
+					{
+						workout_plan_id: 1,
+						individual_workout_row_id: 3,
+						order_id: 2,
+						exercise_id: 2,
+						set_id: 1,
+						reps: 10,
+						weight: 100,
+					},
+				]);
+			});
+	});
+	test('GET:400 returns an error when a invalid workout id is used', () => {
+		return request(app)
+			.get('/api/individualworkouts/banana')
+			.expect(400)
+			.then(({ body }) => {
+				expect(body.msg).toBe('Bad Request');
+			});
+	});
+	test('GET:404 returns an error when a non-existing but valid workout id is used', () => {
+		return request(app)
+			.get('/api/individualworkouts/9999')
+			.expect(404)
+			.then(({ body }) => {
+				expect(body.msg).toBe('Not Found');
+			});
+	});
+});
