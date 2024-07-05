@@ -37,7 +37,7 @@ export const SettingsScreen = () => {
   );
 };
 
-const Separator = () => <View style={styles.separator} />;
+export const Separator = () => <View style={styles.separator} />;
 
 const styles = StyleSheet.create({
   container: {
