@@ -130,3 +130,192 @@ describe('/api/individualworkouts/:workout_id', () => {
 			});
 	});
 });
+
+describe('/api/userslogin', () => {
+	test('POST: 201 post new user account', () => {
+		const userLogin = {
+			username: 'santa',
+			password: 'hohoho',
+			email: 'santa@northpole.com',
+		};
+		return request(app)
+			.post('/api/userlogin')
+			.send(userLogin)
+			.expect(201)
+			.then(({ body }) => {
+				expect(body.userlogin).toMatchObject({
+					username: 'santa',
+					password: 'hohoho',
+					email: 'santa@northpole.com',
+					user_id: 2,
+				});
+			});
+	});
+	test('POST: 400 returns error if user login data is bad', () => {
+		const userLogin = {
+			username: 'santa',
+			password: 'hohoho',
+		};
+		return request(app)
+			.post('/api/userlogin')
+			.send(userLogin)
+			.expect(400)
+			.then(({ body }) => {
+				expect(body.msg).toBe('Bad Request');
+			});
+	});
+	test('POST: 400 returns error if username is already taken', () => {
+		const userLogin1 = {
+			username: 'santa',
+			password: 'hohoho',
+			email: 'santa@northpole.com',
+		};
+		const userLogin2 = {
+			username: 'santa',
+			password: 'fakehohoho',
+			email: 'fakesanta@northpole.com',
+		};
+		return request(app)
+			.post('/api/userlogin')
+			.send(userLogin1)
+			.expect(201)
+			.then(() => {
+				return request(app)
+					.post('/api/userlogin')
+					.send(userLogin2)
+					.expect(400)
+					.then(({ body }) => {
+						expect(body.msg).toBe('Bad Request');
+					});
+			});
+	});
+  test('POST: 400 returns error if email is already taken', () => {
+		const userLogin1 = {
+			username: 'santa',
+			password: 'hohoho',
+			email: 'santa@northpole.com',
+		};
+		const userLogin2 = {
+			username: 'fakesanta',
+			password: 'fakehohoho',
+			email: 'santa@northpole.com',
+		};
+		return request(app)
+			.post('/api/userlogin')
+			.send(userLogin1)
+			.expect(201)
+			.then(() => {
+				return request(app)
+					.post('/api/userlogin')
+					.send(userLogin2)
+					.expect(400)
+					.then(({ body }) => {
+						expect(body.msg).toBe('Bad Request');
+					});
+			});
+	});
+});
+
+describe('/api/users', () => {
+	test('POST: 201 posts new user object', () => {
+		const userLogin = {
+			username: 'santa',
+			password: 'hohoho',
+			email: 'santa@northpole.com',
+		};
+		const user = {
+			birthdate: '2024-07-05',
+			height: 190,
+			weight: 100,
+			goal: 'get huge',
+			avatar_body: 1,
+			avatar_hair_shape: 1,
+			avatar_hair_colour: 1,
+			avatar_skin_colour: 1,
+			avatar_shirt_colour: 1,
+		};
+		return request(app)
+			.post('/api/userlogin')
+			.send(userLogin)
+			.then(() => {
+				return request(app)
+					.post('/api/users/2')
+					.send(user)
+					.expect(201)
+					.then(({ body }) => {
+						expect(body.user).toMatchObject({
+							birthdate: '2024-07-04T23:00:00.000Z',
+							user_id: 2,
+							height: 190,
+							weight: 100,
+							goal: 'get huge',
+							avatar_body: 1,
+							avatar_hair_shape: 1,
+							avatar_hair_colour: 1,
+							avatar_skin_colour: 1,
+							avatar_shirt_colour: 1,
+						});
+					});
+			});
+	});
+	test('POST: 400 returns error if user data is bad', () => {
+		const userLogin = {
+			username: 'santa',
+			password: 'hohoho',
+			email: 'santa@northpole.com',
+		};
+		const user = {
+			birthdate: '',
+			height: 'one hundred and ninety',
+			weight: 100,
+			goal: '',
+			avatar_body: 1,
+			avatar_hair_shape: 1,
+			avatar_hair_colour: 1,
+			avatar_skin_colour: 1,
+			avatar_shirt_colour: 1,
+		};
+		return request(app)
+			.post('/api/userlogin')
+			.send(userLogin)
+			.then(() => {
+				return request(app)
+					.post('/api/users/2')
+					.send(user)
+					.expect(400)
+					.then(({ body }) => {
+						expect(body.msg).toBe('Bad Request');
+					});
+			});
+	});
+	test('POST: 404 returns not found if user_id does not exist in userslogin', () => {
+		const userLogin = {
+			username: 'santa',
+			password: 'hohoho',
+			email: 'santa@northpole.com',
+		};
+		const user = {
+			birthdate: '2024-07-05',
+			height: 190,
+			weight: 100,
+			goal: 'get huge',
+			avatar_body: 1,
+			avatar_hair_shape: 1,
+			avatar_hair_colour: 1,
+			avatar_skin_colour: 1,
+			avatar_shirt_colour: 1,
+		};
+		return request(app)
+			.post('/api/userlogin')
+			.send(userLogin)
+			.then(() => {
+				return request(app)
+					.post('/api/users/999')
+					.send(user)
+					.expect(404)
+					.then(({ body }) => {
+						expect(body.msg).toBe('Resource Not Found');
+					});
+			});
+	});
+});
