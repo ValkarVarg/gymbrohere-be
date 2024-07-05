@@ -59,4 +59,20 @@ describe("/api/workouts/:userid", () => {
         ]);
       });
   });
+  test("GET:400 returns an error when a invalid userid is used", () => {
+    return request(app)
+      .get("/api/workouts/banana")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Bad Request");
+      });
+  });
+  test("GET:404 returns an error when a non-existing but valid userid is used", () => {
+    return request(app)
+      .get("/api/workouts/9999")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Not Found");
+      });
+  });
 })
