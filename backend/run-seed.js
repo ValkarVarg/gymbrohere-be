@@ -1,6 +1,9 @@
-import data from "./data/dev-data/index.cjs";
-import {seed} from "./seed.js";
+const devData = require('./data/dev-data/index.js');
+const seed = require('./seed.js');
+const db = require('./connection.js');
 
-import db from "./connection.js";
+const runSeed = () => {
+  return seed(devData).then(() => db.end());
+};
 
-seed(data).then(() => db.end());
+runSeed();
