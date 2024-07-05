@@ -1,7 +1,7 @@
 const db = require("./connection.js");
 const format = require("pg-format");
 
-const seed = ({usersData, usersLoginData, exerciseData}) => {
+const seed = ({usersData, usersLoginData, exerciseData, workoutPlansData, individualWorkoutData}) => {
   return db
     .query(`DROP TABLE IF EXISTS usersItems;`)
     .then(() => {
@@ -187,7 +187,7 @@ function populateWorkoutPlans(workoutPlans) {
 					RETURNING *;`,
     formatWorkoutPlans(workoutPlans)
   );
-  return db.query(insertWorkoutPlansData);
+  return db.query(insertWorkoutPlanData);
 }
 
 function formatWorkoutPlans(workoutPlans) {
