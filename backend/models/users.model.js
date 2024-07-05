@@ -1,6 +1,5 @@
 const db = require('../connection.js');
 
-
 exports.fetchUser = (id) => {
 	return db
 		.query(
@@ -16,6 +15,15 @@ exports.fetchUser = (id) => {
 			}
 			return rows;
 		});
+};
+
+exports.fetchUserLogin = (username) => {
+	return db.query(`SELECT * FROM usersLogin WHERE username = $1`, [username]).then(({ rows }) => {
+		if (rows.length === 0) {
+			return Promise.reject({ status: 404, msg: 'Not Found' });
+		}
+		return rows[0];
+	});
 };
 
 exports.newUserLogin = (userLogin) => {

@@ -1,4 +1,4 @@
-const { fetchUser, newUserLogin, newUser } = require('../models/users.model');
+const { fetchUser, fetchUserLogin, newUserLogin, newUser } = require('../models/users.model');
 const { checkExists, validateUser } = require('../utils/utils.js');
 
 exports.getUser = (req, res, next) => {
@@ -6,6 +6,15 @@ exports.getUser = (req, res, next) => {
 	fetchUser(id)
 		.then((user) => {
 			res.status(200).send({ user: user[0] });
+		})
+		.catch(next);
+};
+
+exports.getUserLogin = (req, res, next) => {
+	const username = req.params.username;
+	fetchUserLogin(username)
+		.then((userLogin) => {
+			res.status(200).send({ userLogin });
 		})
 		.catch(next);
 };
