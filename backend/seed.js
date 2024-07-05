@@ -216,4 +216,4 @@ function formatWorkout(workouts) {
 }
 
 
-module.exports = { seed };
+module.exports =  seed ;
