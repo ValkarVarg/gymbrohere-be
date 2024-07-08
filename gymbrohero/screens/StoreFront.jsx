@@ -6,6 +6,7 @@ import {
   Pressable,
   Image,
   FlatList,
+  ScrollView,
 } from "react-native";
 import { Items } from "../components/Items";
 import { GridScreen } from "./GridScreen";
@@ -36,18 +37,20 @@ export const StoreFront = () => {
   const availableItems = unlockedItems.map((item) => (
     <Items key={item.id} item={item} />
   ));
-
+  // ScrollView will need to be removed once the grid is relocated
   return (
-    <View>
-      <View style={styles.container}>
-        <FlatList
-          data={availableItems}
-          renderItem={({ item }) => item}
-          keyExtractor={(item) => item.id}
-        />
+    <ScrollView>
+      <View>
+        <View style={styles.container}>
+          <FlatList
+            data={availableItems}
+            renderItem={({ item }) => item}
+            keyExtractor={(item) => item.id}
+          />
+        </View>
+        <GridScreen />
       </View>
-      <GridScreen />
-    </View>
+    </ScrollView>
   );
 };
 

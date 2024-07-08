@@ -24,6 +24,16 @@ export const GridScreen = () => {
         <Text style={styles.tile}></Text>
         <Text style={styles.tile}></Text>
         <Text style={styles.tile}></Text>
+        <Text style={styles.tile}></Text>
+        <Text style={styles.tile}></Text>
+        <Text style={styles.tile}></Text>
+        <Text style={styles.tile}></Text>
+        <Text style={styles.tile}></Text>
+        <Text style={styles.tile}></Text>
+        <Text style={styles.tile}></Text>
+        <Text style={styles.tile}></Text>
+        <Text style={styles.tile}></Text>
+        <Text style={styles.tile}></Text>
       </View>
     </ScrollView>
   );
