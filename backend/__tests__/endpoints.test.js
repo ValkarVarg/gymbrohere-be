@@ -455,14 +455,29 @@ describe("/api/workouts", () => {
       .send(workoutPlan)
       .expect(201)
       .then((response) => {
-        const planid = response.body.workout.workout_plan_id
-		return request(app)
+        const planid = response.body.workout.workout_plan_id;
+        return request(app)
           .post(`/api/workouts/${planid}`)
           .send(newWorkout)
           .expect(400)
           .then(({ body }) => {
             expect(body.msg).toBe("Bad Request");
           });
+      });
+  });
+});
+
+describe("/api/exercises", () => {
+  test("GET:200 sends an object of all exercises to the user", () => {
+    return request(app)
+      .get("/api/exercises")
+      .expect(200)
+      .then(({ body }) => {
+        body.exercises.forEach((exercise) => {
+          expect(exercise).toMatchObject({
+			exercise_name: expect.any(String),
+			exercise_id: expect.any(Number),});
+        });
       });
   });
 });

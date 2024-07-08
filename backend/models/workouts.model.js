@@ -44,3 +44,13 @@ exports.insertWorkoutPlan = (workoutPlan) => {
 	const { workout_plan_name, user_id } = workoutPlan;
 	return db.query(`INSERT INTO workoutplans (workout_plan_name, user_id) VALUES ($1, $2) RETURNING *;`, [workout_plan_name, user_id]);
 };
+
+exports.fetchExercises = () => {
+	return db
+		.query(
+			`SELECT * FROM exercises`
+		)
+		.then(({ rows }) => {
+			return rows;
+		});
+};
