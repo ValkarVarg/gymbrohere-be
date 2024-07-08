@@ -25,6 +25,8 @@ describe("/api/users/:userid", () => {
           avatar_skin_colour: 1,
           avatar_shirt_colour: 1,
           username: "Jim",
+          experience: 0,
+          complete_workouts: 0,
         });
       });
   });
@@ -475,9 +477,105 @@ describe("/api/exercises", () => {
       .then(({ body }) => {
         body.exercises.forEach((exercise) => {
           expect(exercise).toMatchObject({
-			exercise_name: expect.any(String),
-			exercise_id: expect.any(Number),});
+            exercise_name: expect.any(String),
+            exercise_id: expect.any(Number),
+          });
         });
+      });
+  });
+});
+
+describe("/api/users/:user_id", () => {
+  test("PATCH:200 updates a user with info sent", () => {
+    const body = {
+      birthdate: "2000-01-01T00:00:00.000Z",
+      height: 175,
+      weight: 75,
+      goal: "maintain health",
+      avatar_body: 1,
+      avatar_hair_shape: 2,
+      avatar_hair_colour: 3,
+      avatar_skin_colour: 2,
+      avatar_shirt_colour: 3,
+      experience: 100,
+      complete_workouts: 10,
+    };
+
+    const userId = 1;
+    return request(app)
+      .patch(`/api/users/${userId}`)
+      .send(body)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.user).toMatchObject({
+          birthdate: "2000-01-01T00:00:00.000Z",
+          height: 175,
+          weight: 75,
+          goal: "maintain health",
+          avatar_body: 1,
+          avatar_hair_shape: 2,
+          avatar_hair_colour: 3,
+          avatar_skin_colour: 2,
+          avatar_shirt_colour: 3,
+          experience: 100,
+          complete_workouts: 10,
+        });
+      });
+  });
+  test("PATCH:200 works when only some info sent", () => {
+    const body = {
+      experience: 100,
+      complete_workouts: 10,
+    };
+
+    const userId = 1;
+    return request(app)
+      .patch(`/api/users/${userId}`)
+      .send(body)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.user).toMatchObject({
+          birthdate: "1999-03-12T00:00:00.000Z",
+          height: 180,
+          weight: 120,
+          goal: "get swole",
+          avatar_body: 2,
+          avatar_hair_shape: 1,
+          avatar_hair_colour: 1,
+          avatar_skin_colour: 1,
+          avatar_shirt_colour: 1,
+          experience: 100,
+          complete_workouts: 10,
+        });
+      });
+  });
+  test("PATCH:404 not found if user does not exist", () => {
+    const body = {
+      experience: 100,
+      complete_workouts: 10,
+    };
+
+    const userId = 99;
+    return request(app)
+      .patch(`/api/users/${userId}`)
+      .send(body)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Resource Not Found");
+      });
+  });
+  test("PATCH:400 bad request if wrong body entry used", () => {
+    const body = {
+      expesadasda: 100,
+    };
+
+    const userId = 1;
+    return request(app)
+      .patch(`/api/users/${userId}`)
+      .send(body)
+      .expect(500)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Internal Server Error");
       });
   });
 });
