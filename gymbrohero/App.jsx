@@ -13,6 +13,7 @@ import { StatsScreen } from "./screens/StatsScreen";
 import { RunningWorkout } from "./screens/RunningWorkout";
 import { StoreFront } from "./screens/StoreFront";
 import { LandingPage } from "./screens/LandingPage";
+import { GridScreen } from './screens/GridScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -49,6 +50,7 @@ export default function App() {
           <Stack.Screen name="Stats" component={StatsScreen} />
           <Stack.Screen name="Run Workout" component={RunningWorkout} />
           <Stack.Screen name="StoreFront" component={StoreFront} />
+          <Stack.Screen name="GridScreen" component={GridScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

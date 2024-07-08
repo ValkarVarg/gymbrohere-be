@@ -1,15 +1,7 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  Image,
-  FlatList,
-  ScrollView,
-} from "react-native";
-import { Items } from "../components/Items";
-import { GridScreen } from "./GridScreen";
+import { View, Text, StyleSheet, Pressable, FlatList, Image } from "react-native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
+
 
 const testItems = [
   { id: "1", source: require("../images/Bro.png"), isUnlocked: true },
@@ -19,6 +11,8 @@ const testItems = [
 
 export const StoreFront = () => {
   const [allItems, setAllItems] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     setAllItems(testItems);
@@ -26,7 +20,7 @@ export const StoreFront = () => {
 
   if (!allItems) {
     return (
-      <View>
+      <View style={styles.loadingContainer}>
         <Text>Loading...</Text>
       </View>
     );
@@ -34,27 +28,71 @@ export const StoreFront = () => {
 
   const unlockedItems = allItems.filter((item) => item.isUnlocked);
 
-  const availableItems = unlockedItems.map((item) => (
-    <Items key={item.id} item={item} />
-  ));
-  // ScrollView will need to be removed once the grid is relocated
-  return (
-    <ScrollView>
-      <View>
-        <View style={styles.container}>
-          <FlatList
-            data={availableItems}
-            renderItem={({ item }) => item}
-            keyExtractor={(item) => item.id}
-          />
+  const handleItemPress = (item) => {
+    setSelectedItem(item);
+    navigation.navigate("GridScreen", { selectedImage: item.source });
+  };
+
+  const renderItem = ({ item }) => {
+    const isSelected = item === selectedItem;
+    const itemStyle = [
+      styles.item,
+      !item.isUnlocked && styles.itemLocked,
+      isSelected && styles.itemSelected,
+    ];
+
+    return (
+      <Pressable onPress={() => handleItemPress(item)}>
+        <View style={itemStyle}>
+          <Image source={item.source} style={styles.itemImage} />
         </View>
-        <GridScreen />
-      </View>
-    </ScrollView>
+      </Pressable>
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={unlockedItems}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        ListHeaderComponent={<Text style={styles.header}>Store Front</Text>}
+        numColumns={3}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
-  itemContainer: {},
+  container: {
+    flex: 1,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginVertical: 10,
+  },
+  item: {
+    margin: 10,
+    padding: 10,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: "transparent",
+  },
+  itemLocked: {
+    opacity: 0.5,
+  },
+  itemSelected: {
+    borderColor: "blue",
+  },
+  itemImage: {
+    width: 95,
+    height: 95,
+  },
 });

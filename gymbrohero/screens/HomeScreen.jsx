@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Pressable, Image } from "react-native";
+import { View, Text, StyleSheet, Pressable, Image, ImageBackground } from "react-native";
 import { LevelUp } from "../components/LevelUp";
 
 export default function HomeScreen({ navigation }) {
@@ -7,32 +7,45 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {closedLevelUp ? (
-        <Text>This is the Home Screen</Text>
-      ) : (
-        <LevelUp
-          closedLevelUp={closedLevelUp}
-          setClosedLevelUp={setClosedLevelUp}
-        />
-      )}
-      <Pressable
-        onPress={() => navigation.navigate("StoreFront")}
-        style={styles.storeButtonWrapper}
+      <ImageBackground
+        source={require("../images/background.jpg")} 
+        style={styles.backgroundImage}
       >
-        <Image
-          source={require("../images/storefront.png")}
-          style={styles.storeButton}
-        />
-      </Pressable>
+        {/* {closedLevelUp ? (
+          <Text style={styles.homeText}>This is the Home Screen</Text>
+        ) : (
+          <LevelUp
+            closedLevelUp={closedLevelUp}
+            setClosedLevelUp={setClosedLevelUp}
+          />
+        )} */}
+        <Pressable
+          onPress={() => navigation.navigate("StoreFront")}
+          style={styles.storeButtonWrapper}
+        >
+          <Image
+            source={require("../images/storefront.png")}
+            style={styles.storeButton}
+          />
+        </Pressable>
+      </ImageBackground>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    position: "relative",
-    width: "100%",
-    height: "100%",
+    flex: 1,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+  },
+  homeText: {
+    textAlign: 'center',
+    fontSize: 24,
+    color: '#fff', // Adjust text color based on background image
   },
   storeButton: {
     width: 50,
@@ -44,4 +57,3 @@ const styles = StyleSheet.create({
     right: 20,
   },
 });
-
