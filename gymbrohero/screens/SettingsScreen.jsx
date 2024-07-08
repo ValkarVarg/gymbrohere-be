@@ -9,7 +9,7 @@ import {
 
 
 
-export const SettingsScreen = ({...props}) => {
+export const SettingsScreen = ({navigation, userId}) => {
 
     const  [accountSettingsView, setAccountSettingsView] = useState(true)
 
@@ -33,7 +33,7 @@ export const SettingsScreen = ({...props}) => {
         </Pressable>
       </View>
       <Separator />
-      {accountSettingsView? <AccountSettings {...props}/> : <UserSetup />}
+      {accountSettingsView? <AccountSettings navigation={navigation} userId={userId}/> : <UserSetup />}
     </View>
   );
 };

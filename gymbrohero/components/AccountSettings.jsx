@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable, Switch } from 'react-native';
 import { Separator } from '../screens/SettingsScreen';
 
-export const AccountSettings = (props) => {
-  console.log(props)
+export const AccountSettings = ({navigation, userId}) => {
   const [pushIsOn, setPushIsOn] = useState(false);
   const [AreYouSureIsOn, setAreYouSureIsOn] = useState(false);
   const [viewDelete, setViewDelete] = useState(false);
   const [deleteMessage, setDeleteMessage] = useState('')
-  console.log(props.navigation.getId, '<<props user id')
 
   const togglePushSwitch = () => {
     setPushIsOn((currentState) => !currentState);
@@ -23,9 +21,9 @@ export const AccountSettings = (props) => {
   const handleDeleteSubmit = () => {
     if(AreYouSureIsOn === true) {
       setDeleteMessage('profile is being deleted...')
-      //get user state 
-      //add delete request here!  
-      props.navigation.navigate("LandingPage");
+      console.log(userId)
+      //add delete request here! - use user ID, .then nav to landing page 
+      navigation.navigate("LandingPage");
     }
     else{
       setDeleteMessage('please check are you sure!')
