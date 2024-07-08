@@ -1,15 +1,24 @@
-import React from "react";
-import { Button, TextInput, View, Text } from "react-native";
+import React, { useState } from "react";
+import { Button, TextInput, View, Text, ScrollView } from "react-native";
+import { SelectList } from 'react-native-dropdown-select-list'
 import { Formik } from "formik";
+import { CreateExerciseBlock } from "../components/CreateExerciseBlock";
 
 export const CreateWorkoutScreen = (props) => {
+    const [exerciseSelected, setExerciseSelected] = useState('')
+
+    const exerciseData = [
+      {key:1 ,value: 'squat'},
+      {key:1 ,value: 'bench'},
+      {key:1 ,value: 'deadlift'},
+    ]
+
+
   return (
+    <ScrollView>
     <Formik
       initialValues={{
         workoutName: "",
-        workoutSets: "",
-        workoutReps: "",
-        workoutWeight: "",
       }}
       onSubmit={(values) => console.log(values)}
     >
@@ -27,45 +36,11 @@ export const CreateWorkoutScreen = (props) => {
               marginBottom: 20,
             }}
           />
-          <Text>Sets:</Text>
-          <TextInput
-            onChangeText={handleChange("workoutSets")}
-            onBlur={handleBlur("workoutSets")}
-            value={values.workoutSets}
-            style={{
-              height: 40,
-              borderColor: "gray",
-              borderWidth: 1,
-              marginBottom: 20,
-            }}
-          />
-          <Text>Reps:</Text>
-          <TextInput
-            onChangeText={handleChange("workoutReps")}
-            onBlur={handleBlur("workoutReps")}
-            value={values.workoutReps}
-            style={{
-              height: 40,
-              borderColor: "gray",
-              borderWidth: 1,
-              marginBottom: 20,
-            }}
-          />
-          <Text>Weight:</Text>
-          <TextInput
-            onChangeText={handleChange("workoutWeight")}
-            onBlur={handleBlur("workoutWeight")}
-            value={values.workoutWeight}
-            style={{
-              height: 40,
-              borderColor: "gray",
-              borderWidth: 1,
-              marginBottom: 20,
-            }}
-          />
+             <CreateExerciseBlock></CreateExerciseBlock>
           <Button onPress={handleSubmit} title="Create Workout" />
         </View>
       )}
     </Formik>
+    </ScrollView>
   );
 };
