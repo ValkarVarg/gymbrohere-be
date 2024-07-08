@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable, Switch } from 'react-native';
-import { Formik } from 'formik';
 import { Separator } from '../screens/SettingsScreen';
 
-export const AccountSettings = () => {
+export const AccountSettings = (props) => {
+  console.log(props)
   const [pushIsOn, setPushIsOn] = useState(false);
   const [AreYouSureIsOn, setAreYouSureIsOn] = useState(false);
   const [viewDelete, setViewDelete] = useState(false);
+  const [deleteMessage, setDeleteMessage] = useState('')
+  console.log(props.navigation.getId, '<<props user id')
 
   const togglePushSwitch = () => {
     setPushIsOn((currentState) => !currentState);
@@ -19,7 +21,16 @@ export const AccountSettings = () => {
     setViewDelete((currentState) => !currentState);
   };
   const handleDeleteSubmit = () => {
-    console.log('delete pressed');
+    if(AreYouSureIsOn === true) {
+      setDeleteMessage('profile is being deleted...')
+      //get user state 
+      //add delete request here!  
+      props.navigation.navigate("LandingPage");
+    }
+    else{
+      setDeleteMessage('please check are you sure!')
+    }
+
   };
 
   return (
@@ -44,13 +55,9 @@ export const AccountSettings = () => {
         <Pressable onPress={seeDeleteOptions} style={styles.button}>
           <Text>I want to delete my profile </Text>
         </Pressable>
+
       </View>
       {viewDelete ? (
-        <Formik
-          initialValues={{ user_id: 'ADD ID HERE' }}
-          onSubmit={(values) => console.log(values)}
-        >
-          {({ handleChange, handleBlur, handleSubmit, values }) => (
             <View>
               <View style={styles.swipeSection}>
                 <Text style={styles.switchText}>Are You Sure?</Text>
@@ -61,12 +68,11 @@ export const AccountSettings = () => {
                   thumbColor={AreYouSureIsOn ? '#14a174' : '#f4f3f4'}
                 />
               </View>
+              <Text>{deleteMessage}</Text>
               <Pressable style={styles.button} onPress={handleDeleteSubmit}>
                 <Text>DELETE</Text>
               </Pressable>
             </View>
-          )}
-        </Formik>
       ) : (
         <></>
       )}

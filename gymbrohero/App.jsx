@@ -44,7 +44,7 @@ export default function App() {
             })}
           />
           <Stack.Screen name="Profile" component={ProfileScreen} />
-          <Stack.Screen name="Settings" component={SettingsScreen} />
+          <Stack.Screen name="Settings" >{props =><SettingsScreen {...props} userId={userId}/>}</Stack.Screen>
           <Stack.Screen name="CreateWorkout" component={CreateWorkoutScreen} />
           <Stack.Screen name="Stats" component={StatsScreen} />
           <Stack.Screen name="Run Workout" component={RunningWorkout} />
