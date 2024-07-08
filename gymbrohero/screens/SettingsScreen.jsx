@@ -9,7 +9,8 @@ import {
 
 
 
-export const SettingsScreen = () => {
+export const SettingsScreen = ({...props}) => {
+
     const  [accountSettingsView, setAccountSettingsView] = useState(true)
 
     const accountClick = () => {
@@ -32,7 +33,7 @@ export const SettingsScreen = () => {
         </Pressable>
       </View>
       <Separator />
-      {accountSettingsView? <AccountSettings/> : <UserSetup />}
+      {accountSettingsView? <AccountSettings {...props}/> : <UserSetup />}
     </View>
   );
 };

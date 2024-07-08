@@ -15,6 +15,7 @@ import { RunningWorkout } from './screens/RunningWorkout';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+<<<<<<< Updated upstream
 	return (
 		<PaperProvider>
 			<NavigationContainer>
@@ -35,6 +36,44 @@ export default function App() {
 			</NavigationContainer>
 		</PaperProvider>
 	);
+=======
+
+  const [userId, setUserId] = useState(null);
+
+  const handleLogin = (id) => {
+    setUserId(id);
+  };
+
+  return (
+    <PaperProvider>
+      <NavigationContainer>
+      <Stack.Navigator initialRouteName="LandingPage">
+      <Stack.Screen
+            name="LandingPage"
+            options={{ headerShown: false }}
+          >
+            {props => <LandingPage {...props} handleLogin={handleLogin} />}
+          </Stack.Screen>
+          <Stack.Screen
+            name="Main"
+            component={Navbar}
+            options={({ navigation }) => ({
+              header: () => (
+                <Topbar navigation={navigation} title="Gymbro Hero" />
+              ),
+            })}
+          />
+          <Stack.Screen name="Profile" component={ProfileScreen}/>
+          <Stack.Screen name="Settings" >{props =><SettingsScreen {...props} userId={userId}/>}</Stack.Screen>
+          <Stack.Screen name="CreateWorkout" component={CreateWorkoutScreen} />
+          <Stack.Screen name="Stats" component={StatsScreen} />
+          <Stack.Screen name="Run Workout" component={RunningWorkout} />
+          <Stack.Screen name="StoreFront" component={StoreFront} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
+  );
+>>>>>>> Stashed changes
 }
 
 // const styles = StyleSheet.create({
