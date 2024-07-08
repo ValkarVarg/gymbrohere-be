@@ -1,4 +1,5 @@
 const db = require('../connection.js');
+const format = require('pg-format')
 
 exports.fetchWorkouts = (id) => {
 	return db
@@ -22,4 +23,26 @@ exports.fetchIndividualWorkout = (id) => {
 		}
 		return rows;
 	});
+};
+
+exports.insertIndividualWorkout = (workoutData) => {
+	console.log(workoutData);
+	const formattedData = format(
+		'INSERT INTO individualworkout (workout_plan_id, order_id, exercise_id, set_id, reps, weight) VALUES %L RETURNING *;',
+		workoutData.map((workout) => [workout.workout_plan_id, workout.order_id, workout.exercise_id, workout.set_id, workout.reps, workout.weight])
+	);
+	return db
+		.query(formattedData)
+		.then(({ rows }) => {
+			console.log(rows);
+			return rows;
+		})
+		.catch((err) => {
+			throw err;
+		});
+};
+
+exports.insertWorkoutPlan = (workoutPlan) => {
+	const { workout_plan_name, user_id } = workoutPlan;
+	return db.query(`INSERT INTO workoutplans (workout_plan_name, user_id) VALUES ($1, $2) RETURNING *;`, [workout_plan_name, user_id]);
 };
