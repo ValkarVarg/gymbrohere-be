@@ -1,4 +1,5 @@
 const { fetchWorkouts, fetchIndividualWorkout, insertIndividualWorkout, insertWorkoutPlan } = require('../models/workouts.model');
+const { checkExists } = require('../utils/utils.js');
 
 exports.getWorkouts = (req, res, next) => {
 	const id = req.params.userid;
@@ -20,7 +21,8 @@ exports.getIndividualWorkout = (req, res, next) => {
 
 exports.postNewWorkout = (req, res, next) => {
 	const workoutData = req.body;
-	insertIndividualWorkout(workoutData)
+	const workoutid = req.params.workout_plan_id
+	insertIndividualWorkout(workoutData, workoutid)
 		.then((newWorkouts) => {
 			res.status(201).send(newWorkouts);
 		})
@@ -32,9 +34,13 @@ exports.postNewWorkout = (req, res, next) => {
 
 exports.postNewWorkoutPlan = (req, res, next) => {
 	const workoutPlan = req.body;
-	insertWorkoutPlan(workoutPlan)
+	checkExists('userslogin', 'user_id', workoutPlan.user_id)
+	.then(()=>{
+		insertWorkoutPlan(workoutPlan)
 		.then((workout) => {
 			res.status(201).send({ workout: workout.rows[0] });
 		})
 		.catch(next);
+	})
+	.catch(next);
 };

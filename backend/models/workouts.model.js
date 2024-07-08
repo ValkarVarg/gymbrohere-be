@@ -25,16 +25,14 @@ exports.fetchIndividualWorkout = (id) => {
 	});
 };
 
-exports.insertIndividualWorkout = (workoutData) => {
-	console.log(workoutData);
+exports.insertIndividualWorkout = (workoutData, workoutid) => {
 	const formattedData = format(
 		'INSERT INTO individualworkout (workout_plan_id, order_id, exercise_id, set_id, reps, weight) VALUES %L RETURNING *;',
-		workoutData.map((workout) => [workout.workout_plan_id, workout.order_id, workout.exercise_id, workout.set_id, workout.reps, workout.weight])
+		workoutData.map((workout) => [workoutid, workout.order_id, workout.exercise_id, workout.set_id, workout.reps, workout.weight])
 	);
 	return db
 		.query(formattedData)
 		.then(({ rows }) => {
-			console.log(rows);
 			return rows;
 		})
 		.catch((err) => {

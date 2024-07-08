@@ -16,9 +16,9 @@ app.get('/api/userlogin/:username', getUserLogin);
 
 app.get('/api/workouts/:userid', getWorkouts);
 
-app.post('/api/workouts', postNewWorkout);
+app.post('/api/workouts/:workout_plan_id', postNewWorkout);
 
-app.post('/api/workouts/:workout_plan_id', postNewWorkoutPlan)
+app.post('/api/workoutplans', postNewWorkoutPlan)
 
 app.get('/api/individualworkouts/:workout_id', getIndividualWorkout);
 
