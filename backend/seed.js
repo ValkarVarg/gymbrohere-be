@@ -78,7 +78,9 @@ const seed = ({ usersData, usersLoginData, exerciseData, workoutPlansData, indiv
   avatar_hair_shape INT NOT NULL,
   avatar_hair_colour INT NOT NULL,
   avatar_skin_colour INT NOT NULL,
-  avatar_shirt_colour INT NOT NULL
+  avatar_shirt_colour INT NOT NULL,
+  complete_workouts INT DEFAULT 0,
+  experience INT DEFAULT 0
 );`);
 	}
 	function createWorkoutPlans() {
