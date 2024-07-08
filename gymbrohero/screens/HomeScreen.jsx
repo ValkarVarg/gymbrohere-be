@@ -19,6 +19,14 @@ export default function HomeScreen({ navigation }) {
             setClosedLevelUp={setClosedLevelUp}
           />
         )} */}
+        
+        <View style={styles.centeredContainer}>
+          <Image
+            source={require("../images/hero.png")}
+            style={styles.heroImage}
+          />
+        </View>
+
         <Pressable
           onPress={() => navigation.navigate("StoreFront")}
           style={styles.storeButtonWrapper}
@@ -42,10 +50,23 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     justifyContent: 'center',
   },
+  centeredContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  heroImage: {
+    width: 400,
+    height: 400,
+    resizeMode: 'contain',
+    position: "absolute",
+    bottom: 50,
+    right: 0,
+  },
   homeText: {
     textAlign: 'center',
     fontSize: 24,
-    color: '#fff', // Adjust text color based on background image
+    color: '#fff', 
   },
   storeButton: {
     width: 50,
