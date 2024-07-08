@@ -2,9 +2,12 @@ const { getUser, getUserLogin, postUserLogin, postUser } = require('./controller
 const { getWorkouts, getIndividualWorkout } = require('./controllers/workouts.controller');
 
 const express = require('express');
+const cors = require('cors')
+
 
 const app = express();
 
+app.use(cors())
 app.use(express.json());
 
 app.get('/api/users/:userid', getUser);

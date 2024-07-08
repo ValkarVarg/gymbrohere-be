@@ -29,6 +29,7 @@
     "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-native-community/netinfo": "^11.3.2",
     "aws-amplify": "^6.3.8",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "expo": "^51.0.17",
     "express": "^4.19.2",
@@ -43,6 +44,8 @@
     "supertest": "^7.0.0"
   },
   "jest": {
-  "setupFiles": ["./jest.setup.js"]
-}
+    "setupFiles": [
+      "./jest.setup.js"
+    ]
+  }
 }
