@@ -1,4 +1,4 @@
-const { fetchWorkouts, fetchIndividualWorkout, insertIndividualWorkout, insertWorkoutPlan } = require('../models/workouts.model');
+const { fetchWorkouts, fetchIndividualWorkout, insertIndividualWorkout, insertWorkoutPlan, fetchExercises } = require('../models/workouts.model');
 const { checkExists } = require('../utils/utils.js');
 
 exports.getWorkouts = (req, res, next) => {
@@ -43,4 +43,12 @@ exports.postNewWorkoutPlan = (req, res, next) => {
 		.catch(next);
 	})
 	.catch(next);
+};
+
+exports.getExercises = (req, res, next) => {
+	fetchExercises()
+		.then((exercises) => {
+			res.status(200).send({"exercises": exercises});
+		})
+		.catch(next);
 };
