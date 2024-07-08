@@ -342,3 +342,74 @@ describe('/api/users', () => {
 			});
 	});
 });
+
+describe('/api/workouts/:workout_plan_id', () => {
+	test('POST: 201 posts new workout plan', () => {
+		const workoutPlan = {
+			workout_plan_name: 'big',
+			user_id: 1,
+		};
+		return request(app)
+			.post('/api/workouts/3')
+			.send(workoutPlan)
+			.expect(201)
+			.then((response) => {
+				expect(response.body.workout).toMatchObject({
+					workout_plan_id: 3,
+					workout_plan_name: 'big',
+					user_id: 1,
+				});
+			});
+	});
+});
+
+describe('/api/workouts', () => {
+	test('POST: 201 posts new individual workout', () => {
+		const workoutPlan = {
+			workout_plan_name: 'big',
+			user_id: 1,
+		};
+		const newWorkout = [
+			{
+				workout_plan_id: 3,
+				order_id: 1,
+				exercise_id: 1,
+				set_id: 1,
+				reps: 10,
+				weight: 100,
+			},
+			{
+				workout_plan_id: 3,
+				order_id: 1,
+				exercise_id: 1,
+				set_id: 2,
+				reps: 10,
+				weight: 100,
+			},
+		];
+		return request(app)
+			.post('/api/workouts/3')
+			.send(workoutPlan)
+			.expect(201)
+			.then(() => {
+				return request(app)
+					.post('/api/workouts')
+					.send(newWorkout)
+					.expect(201)
+					.then(({ body }) => {
+						expect(body).toEqual(expect.any(Array));
+						expect(body).toHaveLength(2);
+						body.forEach((workout) => {
+							expect(workout).toMatchObject({
+								workout_plan_id: expect.any(Number),
+								order_id: expect.any(Number),
+								exercise_id: expect.any(Number),
+								set_id: expect.any(Number),
+								reps: expect.any(Number),
+								weight: expect.any(Number),
+							});
+						});
+					});
+			});
+	});
+});

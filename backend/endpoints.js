@@ -1,5 +1,5 @@
 const { getUser, getUserLogin, postUserLogin, postUser } = require('./controllers/users.controller');
-const { getWorkouts, getIndividualWorkout } = require('./controllers/workouts.controller');
+const { getWorkouts, getIndividualWorkout, postNewWorkout, postNewWorkoutPlan } = require('./controllers/workouts.controller');
 
 const express = require('express');
 const cors = require('cors')
@@ -15,6 +15,10 @@ app.get('/api/users/:userid', getUser);
 app.get('/api/userlogin/:username', getUserLogin);
 
 app.get('/api/workouts/:userid', getWorkouts);
+
+app.post('/api/workouts', postNewWorkout);
+
+app.post('/api/workouts/:workout_plan_id', postNewWorkoutPlan)
 
 app.get('/api/individualworkouts/:workout_id', getIndividualWorkout);
 
