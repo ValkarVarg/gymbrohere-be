@@ -1,6 +1,6 @@
 const { getUser, getUserLogin, postUserLogin, postUser, patchUser, deleteUser } = require('./controllers/users.controller');
-const { getWorkouts, getIndividualWorkout, postNewWorkout, postNewWorkoutPlan, getExercises } = require('./controllers/workouts.controller');
-const {getItems, getUserItems} = require('./controllers/items.controller')
+const { getWorkouts, getIndividualWorkout, postNewWorkout, postNewWorkoutPlan, getExercises, deleteWorkout } = require('./controllers/workouts.controller');
+const {getItems, getUserItems, postUserItem, patchUserItem} = require('./controllers/items.controller')
 
 const express = require('express');
 const cors = require('cors')
@@ -23,10 +23,13 @@ app.post('/api/workouts/:workout_plan_id', postNewWorkout);
 app.post('/api/workoutplans', postNewWorkoutPlan)
 app.post('/api/userlogin', postUserLogin);
 app.post('/api/users/:user_id', postUser);
+app.post('/api/items/:user_id', postUserItem)
 
 app.patch('/api/users/:user_id', patchUser)
+app.patch('/api/items/', patchUserItem)
 
 app.delete('/api/users/:user_id', deleteUser)
+app.delete('/api/workoutplans/:workout_plan_id', deleteWorkout)
 
 app.use((err, req, res, next) => {
 	if (err.status && err.msg) {

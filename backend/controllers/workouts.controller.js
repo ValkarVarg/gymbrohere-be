@@ -1,4 +1,4 @@
-const { fetchWorkouts, fetchIndividualWorkout, insertIndividualWorkout, insertWorkoutPlan, fetchExercises } = require('../models/workouts.model');
+const { fetchWorkouts, fetchIndividualWorkout, insertIndividualWorkout, insertWorkoutPlan, fetchExercises, removeWorkout } = require('../models/workouts.model');
 const { checkExists } = require('../utils/utils.js');
 
 exports.getWorkouts = (req, res, next) => {
@@ -52,3 +52,13 @@ exports.getExercises = (req, res, next) => {
 		})
 		.catch(next);
 };
+
+exports.deleteWorkout = (req, res, next) => {
+	const id = req.params.workout_plan_id
+	removeWorkout(id)
+		.then(() => {
+			res.status(204).send();
+		})
+		.catch(next);
+};
+
