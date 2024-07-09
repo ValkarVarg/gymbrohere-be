@@ -4,6 +4,7 @@ const {
   newUserLogin,
   newUser,
   updateUser,
+  removeUser
 } = require("../models/users.model");
 const { checkExists, validateUser } = require("../utils/utils.js");
 
@@ -63,3 +64,15 @@ exports.patchUser = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.deleteUser = (req, res, next) => {
+	const id = req.params.user_id;
+	checkExists("userslogin", "user_id", id)
+    .then(() => {
+	removeUser(id)
+	  .then(() => {
+		res.status(204).send();
+	  }).catch(next)
+	})
+	  .catch(next);
+  };

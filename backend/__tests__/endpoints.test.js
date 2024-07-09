@@ -579,3 +579,95 @@ describe("/api/users/:user_id", () => {
       });
   });
 });
+
+describe("/api/users", () => {
+  test("DELETE:204 deletes a user", () => {
+    return request(app)
+      .delete("/api/users/1")
+      .expect(204)
+      .then(() => {
+        return request(app)
+          .get("/api/users/1")
+          .expect(404)
+          .then(({ body }) => {
+            expect(body.msg).toBe("Not Found");
+          });
+      });
+  });
+});
+
+describe("/api/items", () => {
+  test("GET:200 returns all available items", () => {
+    return request(app)
+      .get("/api/items")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.items.length).toBe(2);
+      });
+  });
+});
+
+describe("/api/items/:user_id", () => {
+  test("GET:200 returns all items associated with the user", () => {
+    return request(app)
+      .get("/api/items/1")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.items.length).toBe(1);
+      });
+  });
+test("POST:201 adds an item to userItems", () => {
+  const item = { item_id: 1, display_location: "A3" };
+  return request(app)
+    .post("/api/items/1")
+    .send(item)
+    .expect(201)
+    .then(({ body }) => {
+      expect(body.item).toMatchObject({
+        users_item_row_id: 2,
+        user_id: 1,
+        item_id: 1,
+        display_location: "A3",
+      });
+    });
+})
+test("PATCH:200 updates a user item with info sent", () => {
+	const body = {
+	  users_item_row_id: 1,
+	  user_id: 1,
+	  item_id: 2,
+	  display_location: "B4",
+	};
+	return request(app)
+	  .patch(`/api/items`)
+	  .send(body)
+	  .expect(200)
+	  .then(({ body }) => {
+		expect(body.item).toMatchObject({
+		  users_item_row_id: 1,
+		  user_id: 1,
+		  item_id: 2,
+		  display_location: "B4",
+		});
+	  });
+  });
+});
+
+describe.only("/api/workoutplans/:workout_plan_id", () => {
+	test("DELETE:204 deletes a workout plan", () => {
+	  return request(app)
+		.delete("/api/workoutplans/1")
+		.expect(204)
+		.then(() => {
+		  return request(app)
+			.get("/api/workouts/1")
+			.expect(200)
+			.then(({ body }) => {
+				const workoutsWithDeletedPlan = body.workouts.filter(
+					workout => workout.workout_plan_id === 1
+				  );
+				  expect(workoutsWithDeletedPlan.length).toBe(0);
+			});
+		});
+	});
+  });
