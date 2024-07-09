@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import Timer from "../components/Timer";
 
+
 const ExerciseItem = ({ exercise, isLast }) => (
   <View style={[styles.item, !isLast && styles.itemBorder]}>
     <Text style={[styles.exerciseName, styles.bold]}>

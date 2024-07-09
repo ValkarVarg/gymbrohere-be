@@ -36,3 +36,29 @@ export function postUser(user_id, { birthdate, height, weight, goal }) {
       console.log(err);
     });
 }
+
+export function patchCompletedWorkout(user_id, experience) {
+    return fetchUsers(user_id)
+    .then((response) => {
+      if (!response) {
+        throw new Error('User not found');
+      }
+      const complete_workouts = response.complete_workouts + 1; 
+      return complete_workouts;
+    })
+    .then(complete_workouts => {
+      return gymBroHeroApi
+        .patch(`/users/${user_id}`, { experience, complete_workouts }) 
+        .then(({ data }) => {
+          return data.user; 
+        })
+        .catch(err => {
+          console.error('Error patching user data:', err); 
+          throw err; 
+        });
+    })
+    .catch(err => {
+      console.error('Error fetching user data:', err); 
+      throw err;
+    });
+}
