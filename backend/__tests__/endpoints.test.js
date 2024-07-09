@@ -653,7 +653,7 @@ test("PATCH:200 updates a user item with info sent", () => {
   });
 });
 
-describe.only("/api/workoutplans/:workout_plan_id", () => {
+describe("/api/workoutplans/:workout_plan_id", () => {
 	test("DELETE:204 deletes a workout plan", () => {
 	  return request(app)
 		.delete("/api/workoutplans/1")
