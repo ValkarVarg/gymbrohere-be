@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, Text, View, Pressable,} from "react-native";
+import {useExperience} from "./XpContext"
 
-export default function Timer() {
+export default function Timer({navigation}) {
   const [running, setRunning] = useState(false);
   const [time, setTime] = useState(0);
   const intervalRef = useRef(null);
+  const { addExperience } = useExperience();
 
   const toggleTimer = () => {
     if (!running) {
@@ -20,12 +22,14 @@ export default function Timer() {
   };
 
   const finishTimer = () => {
+    const experience = Math.floor(time/60)
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
     setRunning(false);
-    setTime(0); // Reset timer to 0
+    setTime(0);
+    addExperience(experience)
   };
 
   useEffect(() => {

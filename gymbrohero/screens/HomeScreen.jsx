@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Pressable, Image, ImageBackground } from "react
 import { LevelUp } from "../components/LevelUp";
 
 export default function HomeScreen({ navigation }) {
-  const [closedLevelUp, setClosedLevelUp] = useState(false); //will need to set this state based on xp bar - requires get request
+
 
   return (
     <View style={styles.container}>
@@ -11,15 +11,7 @@ export default function HomeScreen({ navigation }) {
         source={require("../images/background.jpg")} 
         style={styles.backgroundImage}
       >
-        {/* {closedLevelUp ? (
-          <Text style={styles.homeText}>This is the Home Screen</Text>
-        ) : (
-          <LevelUp
-            closedLevelUp={closedLevelUp}
-            setClosedLevelUp={setClosedLevelUp}
-          />
-        )} */}
-        
+          <LevelUp/>
         <View style={styles.centeredContainer}>
           <Image
             source={require("../images/hero.png")}
