@@ -579,3 +579,41 @@ describe("/api/users/:user_id", () => {
       });
   });
 });
+
+describe("/api/users", () => {
+  test("DELETE:204 deletes a user", () => {
+    return request(app)
+      .delete("/api/users/1")
+      .expect(204)
+      .then(() => {
+        return request(app)
+          .get("/api/users/1")
+          .expect(404)
+          .then(({ body }) => {
+            expect(body.msg).toBe("Not Found");
+          });
+      });
+  });
+});
+
+describe("/api/items", () => {
+	test("GET:200 returns all available items", () => {
+	  return request(app)
+		.get("/api/items")
+		.expect(200)
+		.then(({body}) => {
+			expect(body.items.length).toBe(2)
+		});
+	});})
+
+
+describe("/api/items/:user_id", () => {
+	test("GET:200 returns all items associated with the user", () => {
+	  return request(app)
+		.get("/api/items/1")
+		.expect(200)
+		.then(({body}) => {
+			expect(body.items.length).toBe(1)
+		});
+	});})
+
