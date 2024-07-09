@@ -3,6 +3,7 @@ import { Button, TextInput, View, Text, ScrollView } from "react-native";
 import { SelectList } from 'react-native-dropdown-select-list'
 import { Formik } from "formik";
 import { CreateExerciseBlock } from "../components/CreateExerciseBlock";
+import { CreateSet } from "../components/CreateSet";
 
 export const CreateWorkoutScreen = (props) => {
     const [exerciseSelected, setExerciseSelected] = useState('')
@@ -15,10 +16,12 @@ export const CreateWorkoutScreen = (props) => {
 
 
   return (
+
     <ScrollView>
     <Formik
       initialValues={{
-        workoutName: "",
+        workout_plan_name: "",
+        user_id: '' //user state needs to be passed to here. 
       }}
       onSubmit={(values) => console.log(values)}
     >
@@ -26,9 +29,9 @@ export const CreateWorkoutScreen = (props) => {
         <View style={{ padding: 20 }}>
           <Text>Name Your Workout:</Text>
           <TextInput
-            onChangeText={handleChange("workoutName")}
-            onBlur={handleBlur("workoutName")}
-            value={values.workoutName}
+            onChangeText={handleChange("workout_plan_name")}
+            onBlur={handleBlur("workout_plan_name")}
+            value={values.workout_plan_name}
             style={{
               height: 40,
               borderColor: "gray",
