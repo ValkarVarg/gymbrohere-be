@@ -4,10 +4,11 @@ import { Formik, FieldArray } from "formik";
 import { SelectList } from "react-native-dropdown-select-list";
 import { CreateSet } from '../components/CreateSet';
 
-export const CreateWorkoutScreen = (props) => {
+export const CreateWorkoutScreen = ({userId}) => {
   const [newIndividualWorkout, setnewIndividualWorkout] = useState([]);
   const [selected, setSelected] = useState('');
-  console.log(newIndividualWorkout, 'updated new workout state');
+  // const {userId} = props
+  console.log(userId, 'userId in create workout')
 
   const exerciseData = [
     { label: 'Squat', value: 'squat' },
