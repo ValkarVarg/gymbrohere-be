@@ -11,9 +11,9 @@ import { View, StyleSheet } from 'react-native';
 const Tab = createBottomTabNavigator();
 const screenOptions = { headerShown: false };
 
-export const Navbar = () => {
-  const currentExperience = 0
-  const experienceForNextLevel = 0
+export const Navbar = ({ userId }) => {
+  const currentExperience = 0;
+  const experienceForNextLevel = 0;
 
   return (
     <View style={{ flex: 1 }}>
@@ -26,7 +26,9 @@ export const Navbar = () => {
         />
       </View>
       <Tab.Navigator screenOptions={screenOptions}>
-        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Home">
+          {(props) => <HomeScreen {...props} userId={userId} />}
+        </Tab.Screen>
         <Tab.Screen name="Workouts" component={WorkoutsScreen} />
         <Tab.Screen name="CreateWorkout" component={CreateWorkoutScreen} />
         <Tab.Screen name="Stats" component={StatsScreen} />

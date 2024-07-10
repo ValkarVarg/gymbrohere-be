@@ -74,6 +74,18 @@ export function fetchItems() {
     });
 }
 
+
+export function fetchUserItems(user_id) {
+  return gymBroHeroApi
+    .get(`/items/${user_id}`)
+    .then(({ data }) => {
+      return data.items;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
 export function fetchWorkouts(user_id) {
 	return gymBroHeroApi
 		.get(`/workouts/${user_id}`)
@@ -84,7 +96,6 @@ export function fetchWorkouts(user_id) {
 			console.log(err);
 		});
  }
- 
  
  export function fetchIndividualWorkouts(workout_plan_id) {
 	return gymBroHeroApi

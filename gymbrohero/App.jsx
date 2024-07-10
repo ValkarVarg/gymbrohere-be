@@ -15,6 +15,7 @@ import { StoreFront } from './screens/StoreFront';
 import { LandingPage } from './screens/LandingPage';
 import { GridScreen } from './screens/GridScreen';
 import { WorkoutsScreen } from './screens/WorkoutsScreen';
+import {HomeScreen} from "./screens/HomeScreen"
 
 const Stack = createNativeStackNavigator();
 
@@ -29,35 +30,49 @@ export default function App() {
 		const { userId } = props.route.params;
 		return <RunningWorkout {...props} userId={userId} />;
 	};
-
-	return (
-		<ExperienceProvider userId={userId}>
-			<PaperProvider>
-				<NavigationContainer>
-					<Stack.Navigator initialRouteName="LandingPage">
-						<Stack.Screen name="LandingPage" options={{ headerShown: false }}>
-							{(props) => <LandingPage {...props} handleLogin={handleLogin} />}
-						</Stack.Screen>
-						<Stack.Screen
-							name="Main"
-							component={Navbar}
-							options={({ navigation }) => ({
-								header: () => <Topbar navigation={navigation} title="Gymbro Hero" />,
-							})}
-						/>
-						<Stack.Screen name="Profile" component={ProfileScreen} />
-						<Stack.Screen name="Settings">{(props) => <SettingsScreen {...props} userId={userId} />}</Stack.Screen>
-						<Stack.Screen name="CreateWorkout" component={CreateWorkoutScreen} />
-						<Stack.Screen name="Stats" component={StatsScreen} />
-						<Stack.Screen name="Run Workout">{(props) => <RunWorkoutScreen {...props} />}</Stack.Screen>
-						<Stack.Screen name="StoreFront" component={StoreFront} />
-						<Stack.Screen name="GridScreen" component={GridScreen} />
+  
+  return (
+    <ExperienceProvider userId={userId}>
+      <PaperProvider>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="LandingPage">
+            <Stack.Screen name="LandingPage" options={{ headerShown: false }}>
+              {(props) => <LandingPage {...props} handleLogin={handleLogin} />}
+            </Stack.Screen>
+            <Stack.Screen
+              name="Main"
+              options={({ navigation }) => ({
+                header: () => (
+                  <Topbar navigation={navigation} title="Gymbro Hero" />
+                ),
+              })}
+            >
+              {(props) => <Navbar {...props} userId={userId} />}
+            </Stack.Screen>
+            <Stack.Screen name="Profile" component={ProfileScreen} />
+            <Stack.Screen name="Settings">
+              {(props) => <SettingsScreen {...props} userId={userId} />}
+            </Stack.Screen>
+            <Stack.Screen
+              name="CreateWorkout"
+              component={CreateWorkoutScreen}
+            />
+            <Stack.Screen name="Stats" component={StatsScreen} />
+            <Stack.Screen name="Run Workout">
+              {(props) => <RunWorkoutScreen {...props} />}
+            </Stack.Screen>
+            <Stack.Screen name="StoreFront" component={StoreFront} />
+            <Stack.Screen name="GridScreen" >{(props) => <GridScreen {...props} />}</Stack.Screen>
+            <Stack.Screen name="HomeScreen">
+              {(props) => <HomeScreen {...props} userId={userId} />}
+            </Stack.Screen>
 						<Stack.Screen name="WorkoutsScreen">{(props) => <WorkoutsScreen {...props} userId={userId} />}</Stack.Screen>
-					</Stack.Navigator>
-				</NavigationContainer>
-			</PaperProvider>
-		</ExperienceProvider>
-	);
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </ExperienceProvider>
+  );
+
 }
 
 // const styles = StyleSheet.create({
