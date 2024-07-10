@@ -1,7 +1,7 @@
 const db = require('./connection.js');
 const format = require('pg-format');
 
-const seed = ({ usersData, usersLoginData, exerciseData, workoutPlansData, individualWorkoutData }) => {
+const seed = ({ usersData, usersLoginData, exerciseData, workoutPlansData, individualWorkoutData, availableItemData, userItemData }) => {
 	return db
 		.query(`DROP TABLE IF EXISTS usersItems;`)
 		.then(() => {
@@ -57,6 +57,12 @@ const seed = ({ usersData, usersLoginData, exerciseData, workoutPlansData, indiv
 		})
 		.then(() => {
 			return populateIndividualWorkouts(individualWorkoutData);
+		})
+		.then(() => {
+			return populateAvailableItems(availableItemData);
+		})
+		.then(() => {
+			return populateUserItems(userItemData);
 		});
 
 	function createUsersLogin() {
@@ -69,7 +75,7 @@ const seed = ({ usersData, usersLoginData, exerciseData, workoutPlansData, indiv
 
 	function createUsers() {
 		return db.query(`CREATE TABLE users
-  (user_id INT REFERENCES usersLogin(user_id),
+  (user_id INT REFERENCES usersLogin(user_id) ON DELETE CASCADE,
   birthdate DATE NOT NULL,
   height INT NOT NULL,
   weight INT NOT NULL,
@@ -78,14 +84,16 @@ const seed = ({ usersData, usersLoginData, exerciseData, workoutPlansData, indiv
   avatar_hair_shape INT NOT NULL,
   avatar_hair_colour INT NOT NULL,
   avatar_skin_colour INT NOT NULL,
-  avatar_shirt_colour INT NOT NULL
+  avatar_shirt_colour INT NOT NULL,
+  complete_workouts INT DEFAULT 0,
+  experience INT DEFAULT 0
 );`);
 	}
 	function createWorkoutPlans() {
 		return db.query(`CREATE TABLE workoutPlans
     (workout_plan_id SERIAL PRIMARY KEY, 
     workout_plan_name VARCHAR(50) NOT NULL, 
-    user_id INT REFERENCES usersLogin(user_id)
+    user_id INT REFERENCES usersLogin(user_id) ON DELETE CASCADE
     )`);
 	}
 	function createExercises() {
@@ -97,9 +105,9 @@ const seed = ({ usersData, usersLoginData, exerciseData, workoutPlansData, indiv
 	function createIndividualWorkout() {
 		return db.query(`CREATE TABLE individualWorkout 
     (individual_workout_row_id SERIAL PRIMARY KEY, 
-    workout_plan_id INT REFERENCES workoutPlans(workout_plan_id), 
+    workout_plan_id INT REFERENCES workoutPlans(workout_plan_id) ON DELETE CASCADE, 
     order_id INT NOT NULL, 
-    exercise_id INT REFERENCES exercises(exercise_id), 
+    exercise_id INT REFERENCES exercises(exercise_id) ON DELETE CASCADE, 
     set_id INT NOT NULL, 
     reps INT NOT NULL, 
     weight INT 
@@ -110,13 +118,13 @@ const seed = ({ usersData, usersLoginData, exerciseData, workoutPlansData, indiv
     (item_id SERIAL PRIMARY KEY, 
     item_name VARCHAR(50),
     item_img VARCHAR(100), 
-    level_available INT NOT NULL)`);
+    experience_required INT NOT NULL)`);
 	}
 	function createUserItems() {
 		return db.query(`CREATE TABLE usersItems
     (users_item_row_id SERIAL PRIMARY KEY, 
-     user_id INT REFERENCES usersLogin(user_id), 
-     item_id INT REFERENCES availableItems (item_id), 
+     user_id INT REFERENCES usersLogin(user_id) ON DELETE CASCADE, 
+     item_id INT REFERENCES availableItems (item_id) ON DELETE CASCADE, 
      display_location VARCHAR(5))`);
 	}
 };
@@ -209,6 +217,42 @@ function formatWorkout(workouts) {
 		return [workout.workout_plan_id, workout.order_id, workout.exercise_id, workout.set_id, workout.reps, workout.weight];
 	});
 	return formattedWorkoutData;
+}
+
+function populateAvailableItems(items) {
+	const insertItems= format(
+		`INSERT INTO availableItems
+					(item_name, item_img, experience_required)
+					VALUES %L
+					RETURNING *;`,
+		formatItems(items)
+	);
+	return db.query(insertItems);
+}
+
+function formatItems(items) {
+	const formattedItemData = items.map((item) => {
+		return [item.item_name, item.item_img, item.experience_required];
+	});
+	return formattedItemData;
+}
+
+function populateUserItems(items) {
+	const insertUserItems= format(
+		`INSERT INTO usersItems
+					(user_id, item_id, display_location)
+					VALUES %L
+					RETURNING *;`,
+		formatUserItems(items)
+	);
+	return db.query(insertUserItems);
+}
+
+function formatUserItems(items) {
+	const formattedUserItemData = items.map((item) => {
+		return [item.user_id, item.item_id, item.display_location];
+	});
+	return formattedUserItemData;
 }
 
 module.exports = seed;

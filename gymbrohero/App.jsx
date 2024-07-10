@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { PaperProvider } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
+import { ExperienceProvider } from './components/XpContext';
 import { ProfileScreen } from "./screens/ProfileScreen";
 import { SettingsScreen } from "./screens/SettingsScreen";
 import { CreateWorkoutScreen } from "./screens/CreateWorkoutScreen";
@@ -26,6 +26,7 @@ export default function App() {
   };
 
   return (
+    <ExperienceProvider userId={userId}>
     <PaperProvider>
       <NavigationContainer>
       <Stack.Navigator initialRouteName="LandingPage">
@@ -48,12 +49,16 @@ export default function App() {
           <Stack.Screen name="Settings" >{props =><SettingsScreen {...props} userId={userId}/>}</Stack.Screen>
           <Stack.Screen name="CreateWorkout" component={CreateWorkoutScreen} />
           <Stack.Screen name="Stats" component={StatsScreen} />
-          <Stack.Screen name="Run Workout" component={RunningWorkout} />
+          <Stack.Screen
+              name="Run Workout"
+              component={props => <RunningWorkout {...props} userId={userId} />}
+            />
           <Stack.Screen name="StoreFront" component={StoreFront} />
           <Stack.Screen name="GridScreen" component={GridScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
+    </ExperienceProvider>
   );
 }
 

@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable, Switch } from 'react-native';
-import { Separator } from '../screens/SettingsScreen';
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Pressable, Switch } from "react-native";
+import { Separator } from "../screens/SettingsScreen";
 
-export const AccountSettings = ({navigation, userId}) => {
+export const AccountSettings = ({ navigation, userId }) => {
   const [pushIsOn, setPushIsOn] = useState(false);
   const [AreYouSureIsOn, setAreYouSureIsOn] = useState(false);
   const [viewDelete, setViewDelete] = useState(false);
-  const [deleteMessage, setDeleteMessage] = useState('')
+  const [deleteMessage, setDeleteMessage] = useState("");
 
   const togglePushSwitch = () => {
     setPushIsOn((currentState) => !currentState);
@@ -19,16 +19,14 @@ export const AccountSettings = ({navigation, userId}) => {
     setViewDelete((currentState) => !currentState);
   };
   const handleDeleteSubmit = () => {
-    if(AreYouSureIsOn === true) {
-      setDeleteMessage('profile is being deleted...')
-      console.log(userId)
-      //add delete request here! - use user ID, .then nav to landing page 
+    if (AreYouSureIsOn === true) {
+      setDeleteMessage("profile is being deleted...");
+      console.log(userId);
+      //add delete request here! - use user ID, .then nav to landing page
       navigation.navigate("LandingPage");
+    } else {
+      setDeleteMessage("please check are you sure!");
     }
-    else{
-      setDeleteMessage('please check are you sure!')
-    }
-
   };
 
   return (
@@ -39,10 +37,10 @@ export const AccountSettings = ({navigation, userId}) => {
       <View style={styles.swipeSection}>
         <Text style={styles.switchText}>Enable Push Notifications? </Text>
         <Switch
-          trackColor={{ false: 'grey', true: '#06ac68' }}
+          trackColor={{ false: "grey", true: "#06ac68" }}
           onValueChange={togglePushSwitch}
           value={pushIsOn}
-          thumbColor={pushIsOn ? '#14a174' : '#f4f3f4'}
+          thumbColor={pushIsOn ? "#14a174" : "#f4f3f4"}
         />
       </View>
       <Separator />
@@ -53,24 +51,23 @@ export const AccountSettings = ({navigation, userId}) => {
         <Pressable onPress={seeDeleteOptions} style={styles.button}>
           <Text>I want to delete my profile </Text>
         </Pressable>
-
       </View>
       {viewDelete ? (
-            <View>
-              <View style={styles.swipeSection}>
-                <Text style={styles.switchText}>Are You Sure?</Text>
-                <Switch
-                  trackColor={{ false: 'grey', true: '#06ac68' }}
-                  onValueChange={toggleSureSwitch}
-                  value={AreYouSureIsOn}
-                  thumbColor={AreYouSureIsOn ? '#14a174' : '#f4f3f4'}
-                />
-              </View>
-              <Text>{deleteMessage}</Text>
-              <Pressable style={styles.button} onPress={handleDeleteSubmit}>
-                <Text>DELETE</Text>
-              </Pressable>
-            </View>
+        <View>
+          <View style={styles.swipeSection}>
+            <Text style={styles.switchText}>Are You Sure?</Text>
+            <Switch
+              trackColor={{ false: "grey", true: "#06ac68" }}
+              onValueChange={toggleSureSwitch}
+              value={AreYouSureIsOn}
+              thumbColor={AreYouSureIsOn ? "#14a174" : "#f4f3f4"}
+            />
+          </View>
+          <Text>{deleteMessage}</Text>
+          <Pressable style={styles.button} onPress={handleDeleteSubmit}>
+            <Text>DELETE</Text>
+          </Pressable>
+        </View>
       ) : (
         <></>
       )}
@@ -90,22 +87,24 @@ export const AccountSettings = ({navigation, userId}) => {
 
 const styles = StyleSheet.create({
   swipeSection: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 10,
   },
   switchText: {
     padding: 20,
   },
-  sectionHeading: {},
+  sectionHeading: {
+    marginVertical: 16,
+  },
   sectionHeadingText: {
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
   },
   button: {
-    alignItems: 'center',
-    alignSelf: 'flex-start',
+    alignItems: "center",
+    alignSelf: "flex-start",
     padding: 5,
     borderRadius: 5,
     margin: 10,
-    backgroundColor: 'orangered',
+    backgroundColor: "orangered",
   },
 });
