@@ -1,71 +1,148 @@
-import React from "react";
-import { Button, TextInput, View, Text } from "react-native";
-import { Formik } from "formik";
+import React, { useState } from 'react';
+import {
+  Button,
+  TextInput,
+  View,
+  Text,
+  ScrollView,
+  SafeAreaView,
+  StyleSheet,
+} from 'react-native';
+import { Formik, FieldArray } from 'formik';
+import { SelectList } from 'react-native-dropdown-select-list';
+import { CreateSet } from '../components/CreateSet';
+import { postWorkoutId, postWorkoutPlan } from '../api';
 
-export const CreateWorkoutScreen = (props) => {
+export const CreateWorkoutScreen = ({ userId }) => {
+  const [newIndividualWorkout, setnewIndividualWorkout] = useState([]);
+  const [selected, setSelected] = useState('');
+
+  const exerciseData = [
+    { label: 'Squat', value: 1 },
+    { label: 'Bench', value: 2 },
+    { label: 'Deadlift', value: 3 },
+  ];
+
+  const initialValues = {
+    workout: {
+      workout_plan_name: '',
+      user_id: userId, //user state needs to be passed to here,
+    },
+    ExerciseBlock: [
+      {
+        exerciseId: '',
+      },
+    ],
+  };
+
   return (
-    <Formik
-      initialValues={{
-        workoutName: "",
-        workoutSets: "",
-        workoutReps: "",
-        workoutWeight: "",
-      }}
-      onSubmit={(values) => console.log(values)}
-    >
-      {({ handleChange, handleBlur, handleSubmit, values }) => (
-        <View style={{ padding: 20 }}>
-          <Text>Name Your Workout:</Text>
-          <TextInput
-            onChangeText={handleChange("workoutName")}
-            onBlur={handleBlur("workoutName")}
-            value={values.workoutName}
-            style={{
-              height: 40,
-              borderColor: "gray",
-              borderWidth: 1,
-              marginBottom: 20,
-            }}
-          />
-          <Text>Sets:</Text>
-          <TextInput
-            onChangeText={handleChange("workoutSets")}
-            onBlur={handleBlur("workoutSets")}
-            value={values.workoutSets}
-            style={{
-              height: 40,
-              borderColor: "gray",
-              borderWidth: 1,
-              marginBottom: 20,
-            }}
-          />
-          <Text>Reps:</Text>
-          <TextInput
-            onChangeText={handleChange("workoutReps")}
-            onBlur={handleBlur("workoutReps")}
-            value={values.workoutReps}
-            style={{
-              height: 40,
-              borderColor: "gray",
-              borderWidth: 1,
-              marginBottom: 20,
-            }}
-          />
-          <Text>Weight:</Text>
-          <TextInput
-            onChangeText={handleChange("workoutWeight")}
-            onBlur={handleBlur("workoutWeight")}
-            value={values.workoutWeight}
-            style={{
-              height: 40,
-              borderColor: "gray",
-              borderWidth: 1,
-              marginBottom: 20,
-            }}
-          />
-          <Button onPress={handleSubmit} title="Create Workout" />
-        </View>
-      )}
-    </Formik>
+    <ScrollView>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={(values) => {
+          postWorkoutId(values.workout).then((data) => {
+        return [newIndividualWorkout.map((obj, index) => ({
+          exercise_id: obj.exerciseId,
+          set_id: obj.setId,
+          reps: obj.workoutReps,
+          weight: obj.workoutWeight,
+          order_id: index,
+        })), data.workout.workout_plan_id]
+          })
+          .then(([IndividualWorkout, planId]) => {
+            postWorkoutPlan(planId, IndividualWorkout)
+          })
+          alert(JSON.stringify(values, null, 2));
+        }}
+      >
+        {({
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          values,
+          setFieldValue,
+        }) => (
+          <View style={{ padding: 20 }}>
+            <Text>Name Your Workout:</Text>
+            <TextInput
+              onChangeText={handleChange('workout.workout_plan_name')}
+              onBlur={handleBlur('workout.workout_plan_name')}
+              value={values.workout.workout_plan_name}
+              style={{
+                height: 40,
+                borderColor: 'gray',
+                borderWidth: 1,
+                marginBottom: 20,
+              }}
+            />
+            <SafeAreaView>
+              <FieldArray name="ExerciseBlock">
+                {(arrayHelpers) => (
+                  <View>
+                    {values.ExerciseBlock.map((block, index) => (
+                      <View key={index} style={styles.exerciseBlock}>
+                        <Text>Exercise {index + 1}</Text>
+                        <SelectList
+                          setSelected={(val) => setSelected(val)}
+                          onSelect={() =>
+                            setFieldValue(
+                              `ExerciseBlock[${index}].exerciseId`,
+                              selected
+                            )
+                          }
+                          data={exerciseData}
+                          save="value"
+                          placeholder="select exercise"
+                        />
+                        <CreateSet
+                          exerciseObject={values.ExerciseBlock[index]}
+                          newIndividualWorkout={newIndividualWorkout}
+                          setnewIndividualWorkout={setnewIndividualWorkout}
+                          removeExercise={() => arrayHelpers.remove(index)}
+                        />
+                      </View>
+                    ))}
+                    <Button
+                      title="Add Exercise"
+                      onPress={() => {
+                        arrayHelpers.push({
+                          exerciseId: '',
+                        });
+                      }}
+                    />
+                  </View>
+                )}
+              </FieldArray>
+            </SafeAreaView>
+            <Button onPress={handleSubmit} title="Create Workout" />
+          </View>
+        )}
+      </Formik>
+    </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginVertical: 5,
+  },
+  exerciseBlock: {
+    borderWidth: 1,
+    borderColor: 'gray',
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 5,
+  },
+  inlineButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+});
+
+export default CreateWorkoutScreen;

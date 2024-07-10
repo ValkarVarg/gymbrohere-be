@@ -62,3 +62,102 @@ export function patchCompletedWorkout(user_id, experience) {
       throw err;
     });
 }
+
+export function fetchItems() {
+  return gymBroHeroApi
+    .get(`/items`)
+    .then(({ data }) => {
+      return data.items;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+
+export function fetchUserItems(user_id) {
+  return gymBroHeroApi
+    .get(`/items/${user_id}`)
+    .then(({ data }) => {
+      return data.items;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+export function fetchWorkouts(user_id) {
+	return gymBroHeroApi
+		.get(`/workouts/${user_id}`)
+		.then(({ data }) => {
+			return data.workouts;
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+ }
+ 
+ export function fetchIndividualWorkouts(workout_plan_id) {
+	return gymBroHeroApi
+		.get(`/individualworkouts/${workout_plan_id}`)
+		.then(({ data }) => {
+			return data.workout;
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+ }
+ 
+ 
+ export function fetchExercises() {
+	return gymBroHeroApi
+		.get(`/exercises`)
+		.then(({ data }) => {
+			return data.exercises;
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+ }
+ 
+
+
+
+export function postWorkoutId(workout) {
+  return gymBroHeroApi
+    .post("/workoutplans", workout)
+    .then(({data}) => {
+      return data 
+
+ export function postUserItem(user_id, payload) {
+  return gymBroHeroApi
+    .post(`/items/${user_id}`, payload)
+    .then(({ data }) => {
+      return data.user;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+
+export function postWorkoutPlan(planid, workoutPlan) {
+  return gymBroHeroApi
+    .post(`/workouts/${planid}`, workoutPlan)
+    .then(({ data }) => {
+      return data  
+
+export function patchUserItem(payload) {
+  console.log(payload)
+  return gymBroHeroApi
+    .patch(`/items`, payload)
+    .then(({ data }) => {
+      return data.user;
+
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+

@@ -1,24 +1,50 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, Text, StyleSheet, Pressable, FlatList, Image } from "react-native";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import { useExperience } from "../components/XpContext";
+import { fetchItems } from "../api";
+import blackcat from "../assets/items/blackcat.png";
+import bunny from "../assets/items/bunny.png";
+import lizard from "../assets/items/lizard.png";
+import pup1 from "../assets/items/pup1.png";
+import pup2 from "../assets/items/pup2.png";
+import tabbycat from "../assets/items/tabbycat.png";
+import Toast from "react-native-toast-message";
 
+const imageMap = {
+  blackcat: blackcat,
+  bunny: bunny,
+  lizard: lizard,
+  pup1: pup1,
+  pup2: pup2,
+  tabbycat: tabbycat,
+};
 
-const testItems = [
-  { id: "1", source: require("../images/Bro.png"), isUnlocked: true },
-  { id: "2", source: require("../images/Brodarkhair.png"), isUnlocked: true },
-  { id: "3", source: require("../images/storefront.png"), isUnlocked: true },
-];
-
-export const StoreFront = () => {
+export const StoreFront = ({ userId }) => {
   const [allItems, setAllItems] = useState(null);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null); 
+  const [unlockedItems, setUnlockedItems] = useState(null);
   const navigation = useNavigation();
+  const { currentExperience } = useExperience();
+  const toastRef = useRef(null);
 
   useEffect(() => {
-    setAllItems(testItems);
+    const getItems = async () => {
+      try {
+        const items = await fetchItems();
+        setAllItems(items);
+        const newUnlockedItems = items.filter(
+          (item) => currentExperience >= item.level_available
+        );
+        setUnlockedItems(newUnlockedItems);
+      } catch (error) {
+        console.error("Error fetching items:", error);
+      }
+    };
+    getItems();
   }, []);
 
-  if (!allItems) {
+  if (!allItems || !unlockedItems) {
     return (
       <View style={styles.loadingContainer}>
         <Text>Loading...</Text>
@@ -26,25 +52,35 @@ export const StoreFront = () => {
     );
   }
 
-  const unlockedItems = allItems.filter((item) => item.isUnlocked);
-
   const handleItemPress = (item) => {
-    setSelectedItem(item);
-    navigation.navigate("GridScreen", { selectedImage: item.source });
+    const isUnlocked = unlockedItems.includes(item);
+    if (isUnlocked) {
+      setSelectedItem(item);
+      navigation.navigate("GridScreen", { selectedImage: item, userId: userId });
+    } else {
+      Toast.show({
+        type: "error",
+        text1: "Locked Item",
+        text2: "You need to be more buff to unlock this!",
+      });
+    }
   };
 
   const renderItem = ({ item }) => {
     const isSelected = item === selectedItem;
+    const isUnlocked = unlockedItems.includes(item);
     const itemStyle = [
       styles.item,
-      !item.isUnlocked && styles.itemLocked,
+      !isUnlocked && styles.itemLocked,
       isSelected && styles.itemSelected,
     ];
+
+    const itemImage = imageMap[item.item_img];
 
     return (
       <Pressable onPress={() => handleItemPress(item)}>
         <View style={itemStyle}>
-          <Image source={item.source} style={styles.itemImage} />
+          <Image source={itemImage} style={styles.itemImage} />
         </View>
       </Pressable>
     );
@@ -53,11 +89,22 @@ export const StoreFront = () => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={unlockedItems}
+        data={allItems}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.item_id.toString()}
         ListHeaderComponent={<Text style={styles.header}>Store Front</Text>}
         numColumns={3}
+      />
+      <Toast
+        ref={toastRef}
+        config={{
+          error: ({ text1, text2, props, ...otherProps }) => (
+            <View style={{ backgroundColor: "red", padding: 10 }}>
+              <Text style={{ color: "white" }}>{text1}</Text>
+              <Text style={{ color: "white", marginTop: 5 }}>{text2}</Text>
+            </View>
+          ),
+        }}
       />
     </View>
   );

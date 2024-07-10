@@ -18,7 +18,8 @@ const workoutsIcon = require("../images/workoutsicon.png");
 const creatWorkoutIcon = require("../images/createworkouticon.png");
 const statsIcon = require("../images/statsicon.png");
 
-export const Navbar = () => {
+export const Navbar = ({ userId }) => {
+
   const currentExperience = 0;
   const experienceForNextLevel = 0;
 
@@ -32,6 +33,7 @@ export const Navbar = () => {
           barHeight={20}
         />
       </View>
+
       <Tab.Navigator
         screenOptions={{
           ...screenOptions,
@@ -88,6 +90,7 @@ export const Navbar = () => {
             ),
           }}
         />
+
       </Tab.Navigator>
     </View>
   );
