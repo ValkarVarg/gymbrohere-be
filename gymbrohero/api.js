@@ -73,3 +73,14 @@ export function fetchItems() {
       console.log(err);
     });
 }
+
+export function fetchUserItems(user_id) {
+  return gymBroHeroApi
+    .get(`/items/${user_id}`)
+    .then(({ data }) => {
+      return data.items;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}

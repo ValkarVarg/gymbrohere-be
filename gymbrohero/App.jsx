@@ -14,6 +14,7 @@ import { RunningWorkout } from "./screens/RunningWorkout";
 import { StoreFront } from "./screens/StoreFront";
 import { LandingPage } from "./screens/LandingPage";
 import { GridScreen } from "./screens/GridScreen";
+import {HomeScreen} from "./screens/HomeScreen"
 
 const Stack = createNativeStackNavigator();
 
@@ -39,13 +40,14 @@ export default function App() {
             </Stack.Screen>
             <Stack.Screen
               name="Main"
-              component={Navbar}
               options={({ navigation }) => ({
                 header: () => (
                   <Topbar navigation={navigation} title="Gymbro Hero" />
                 ),
               })}
-            />
+            >
+              {(props) => <Navbar {...props} userId={userId} />}
+            </Stack.Screen>
             <Stack.Screen name="Profile" component={ProfileScreen} />
             <Stack.Screen name="Settings">
               {(props) => <SettingsScreen {...props} userId={userId} />}
@@ -59,7 +61,10 @@ export default function App() {
               {(props) => <RunWorkoutScreen {...props} />}
             </Stack.Screen>
             <Stack.Screen name="StoreFront" component={StoreFront} />
-            <Stack.Screen name="GridScreen" component={GridScreen} />
+            <Stack.Screen name="GridScreen" >{(props) => <GridScreen {...props} />}</Stack.Screen>
+            <Stack.Screen name="HomeScreen">
+              {(props) => <HomeScreen {...props} userId={userId} />}
+            </Stack.Screen>
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
