@@ -120,3 +120,25 @@ export function fetchWorkouts(user_id) {
 		});
  }
  
+ export function postUserItem(user_id, payload) {
+  return gymBroHeroApi
+    .post(`/items/${user_id}`, payload)
+    .then(({ data }) => {
+      return data.user;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+export function patchUserItem(payload) {
+  console.log(payload)
+  return gymBroHeroApi
+    .patch(`/items`, payload)
+    .then(({ data }) => {
+      return data.user;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
