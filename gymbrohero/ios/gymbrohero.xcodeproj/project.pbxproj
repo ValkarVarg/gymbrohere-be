@@ -15,6 +15,11 @@
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		B43DD4B4B1E0487FB31F53FE /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13B6B0925C04EEFAC73DBCC /* noop-file.swift */; };
+		28E063D85A444F0D86AFE368 /* Pixelify-Sans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6FD8F5750E541D285E01576 /* Pixelify-Sans.ttf */; };
+		BB7A532F6FA64CF08CEAB65E /* PixelifySans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C5D50097A2DD48B385F46368 /* PixelifySans-Bold.ttf */; };
+		994EF74159F147598A65E66C /* PixelifySans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79B54A8F7E9A47ED8DFF9053 /* PixelifySans-Medium.ttf */; };
+		A73270313F4D4A4DAE2F4677 /* PixelifySans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 372F04E225E14100A9C90F26 /* PixelifySans-Regular.ttf */; };
+		A68F9F7ECBE9492CA470F68D /* PixelifySans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9CF518729D6C495EA54D2355 /* PixelifySans-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +38,11 @@
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-gymbrohero/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		B13B6B0925C04EEFAC73DBCC /* noop-file.swift */ = {isa = PBXFileReference; name = "noop-file.swift"; path = "gymbrohero/noop-file.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
 		129BA07EF08746D58F27C42B /* gymbrohero-Bridging-Header.h */ = {isa = PBXFileReference; name = "gymbrohero-Bridging-Header.h"; path = "gymbrohero/gymbrohero-Bridging-Header.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		C6FD8F5750E541D285E01576 /* Pixelify-Sans.ttf */ = {isa = PBXFileReference; name = "Pixelify-Sans.ttf"; path = "../assets/fonts/Pixelify-Sans.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C5D50097A2DD48B385F46368 /* PixelifySans-Bold.ttf */ = {isa = PBXFileReference; name = "PixelifySans-Bold.ttf"; path = "../assets/fonts/PixelifySans-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		79B54A8F7E9A47ED8DFF9053 /* PixelifySans-Medium.ttf */ = {isa = PBXFileReference; name = "PixelifySans-Medium.ttf"; path = "../assets/fonts/PixelifySans-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		372F04E225E14100A9C90F26 /* PixelifySans-Regular.ttf */ = {isa = PBXFileReference; name = "PixelifySans-Regular.ttf"; path = "../assets/fonts/PixelifySans-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9CF518729D6C495EA54D2355 /* PixelifySans-SemiBold.ttf */ = {isa = PBXFileReference; name = "PixelifySans-SemiBold.ttf"; path = "../assets/fonts/PixelifySans-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +98,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D65327D7A22EEC0BE12398D9 /* Pods */,
 				D7E4C46ADA2E9064B798F356 /* ExpoModulesProviders */,
+				54FD9D21151542DB856A9A0C /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -135,6 +146,19 @@
 			);
 			name = ExpoModulesProviders;
 			sourceTree = "<group>";
+		};
+		54FD9D21151542DB856A9A0C /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				C6FD8F5750E541D285E01576 /* Pixelify-Sans.ttf */,
+				C5D50097A2DD48B385F46368 /* PixelifySans-Bold.ttf */,
+				79B54A8F7E9A47ED8DFF9053 /* PixelifySans-Medium.ttf */,
+				372F04E225E14100A9C90F26 /* PixelifySans-Regular.ttf */,
+				9CF518729D6C495EA54D2355 /* PixelifySans-SemiBold.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -199,6 +223,11 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
 				03E86300767F45FB80F34C0E /* gymbrohero-Bridging-Header.h in Resources */,
+				28E063D85A444F0D86AFE368 /* Pixelify-Sans.ttf in Resources */,
+				BB7A532F6FA64CF08CEAB65E /* PixelifySans-Bold.ttf in Resources */,
+				994EF74159F147598A65E66C /* PixelifySans-Medium.ttf in Resources */,
+				A73270313F4D4A4DAE2F4677 /* PixelifySans-Regular.ttf in Resources */,
+				A68F9F7ECBE9492CA470F68D /* PixelifySans-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

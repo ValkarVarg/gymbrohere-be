@@ -1,15 +1,26 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Image } from 'react-native';
 import Timer from '../components/Timer';
 
-const ExerciseItem = ({ exercise, isLast }) => (
-	<View style={[styles.item, !isLast && styles.itemBorder]}>
-		<Text style={[styles.exerciseName, styles.bold]}>{exercise.exerciseName}</Text>
-		<View style={styles.exerciseStats}>
-			<Text>Sets: {exercise.sets}</Text>
-			<Text>Reps: {exercise.reps}</Text>
-			<Text>Weight: {exercise.weight}kg</Text>
-		</View>
+const ExerciseItem = ({ exercise }) => (
+	<View style={styles.exerciseContainer}>
+		<Text style={[styles.exerciseName, styles.boldText, styles.greenText]}>{exercise.exerciseName}</Text>
+		{exercise.sets.map((set, index) => (
+			<View key={index} style={styles.exerciseDetails}>
+				<Text style={[styles.greenText, styles.regularText]}>
+					<Text style={styles.boldText}>Set: </Text>
+					{set.sets}
+				</Text>
+				<Text style={[styles.greenText, styles.regularText]}>
+					<Text style={styles.boldText}>Reps: </Text>
+					{set.reps}
+				</Text>
+				<Text style={[styles.greenText, styles.regularText]}>
+					<Text style={styles.boldText}>Weight: </Text>
+					{set.weight}kg
+				</Text>
+			</View>
+		))}
 	</View>
 );
 
@@ -19,21 +30,33 @@ export const RunningWorkout = ({ route }) => {
 	if (!workout || !workout.workout_stack || workout.workout_stack.length === 0) {
 		return (
 			<View style={styles.container}>
-				<Text style={[styles.header, styles.bold]}>No workout data found!</Text>
+				<Text style={[styles.header, styles.boldText, styles.greenText]}>No workout data found!</Text>
+				<Image style={styles.smallSad} source={require('../images/sadness.png')} />
 			</View>
 		);
 	}
 
+	const groupedExercises = workout.workout_stack.reduce((acc, curr) => {
+		const exerciseName = curr.exerciseName;
+		if (!acc[exerciseName]) {
+			acc[exerciseName] = [];
+		}
+		acc[exerciseName].push(curr);
+		return acc;
+	}, {});
+
+	const formattedExercises = Object.keys(groupedExercises).map((key) => ({
+		exerciseName: key,
+		sets: groupedExercises[key],
+	}));
+
 	return (
 		<View style={styles.container}>
-			<Text style={[styles.header, styles.bold]}>{workout.workout_name} in progress!</Text>
+			<Text style={[styles.workoutName, styles.header, styles.boldText, styles.greenText]}>- {workout.workout_name} -</Text>
+			<Text style={[styles.header, styles.boldText, styles.greenText]}>Workout in progress!</Text>
 			<Timer />
 			<View style={styles.flatListContainer}>
-				<FlatList
-					data={workout.workout_stack}
-					renderItem={({ item, index }) => <ExerciseItem exercise={item} isLast={index === workout.workout_stack.length - 1} />}
-					keyExtractor={(item, index) => index.toString()}
-				/>
+				<FlatList data={formattedExercises} renderItem={({ item }) => <ExerciseItem exercise={item} />} keyExtractor={(item, index) => index.toString()} />
 			</View>
 		</View>
 	);
@@ -43,40 +66,56 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		padding: 10,
-	},
-	bold: {
-		fontWeight: 'bold',
+		backgroundColor: '#101D2D',
 	},
 	header: {
 		fontSize: 28,
 		textAlign: 'center',
 		marginBottom: 15,
 	},
-	flatListContainer: {
-		borderColor: 'grey',
-		borderWidth: 3,
-		borderRadius: 5,
-		padding: 5,
-	},
-	item: {
-		padding: 5,
-	},
-	itemBorder: {
-		borderBottomWidth: 1,
-		borderBottomColor: 'gray',
-	},
 	workoutName: {
-		textAlign: 'center',
-		fontSize: 18,
+		textTransform: 'uppercase',
+    letterSpacing: 4
+	},
+	flatListContainer: {
+		borderColor: '#69C56D',
+		borderWidth: 4,
+		borderRadius: 4,
+		padding: 12,
+	},
+	exerciseContainer: {
+		borderWidth: 2,
+		borderColor: '#69C56D',
+		borderStyle: 'dashed',
+		borderRadius: 4,
+		padding: 12,
+		margin: 7,
 	},
 	exerciseName: {
-		textTransform: 'capitalize',
-		fontSize: 16,
-		paddingBottom: 5,
+		fontSize: 18,
+		marginBottom: 5,
 	},
-	exerciseStats: {
+	exerciseDetails: {
+		marginBottom: 5,
 		flexDirection: 'row',
-		gap: 10,
+		justifyContent: 'space-between',
+	},
+	smallSad: {
+		width: 40,
+		height: 40,
+		alignSelf: 'center',
+	},
+	greenText: {
+		color: '#69C56D',
+	},
+	regularText: {
+		fontFamily: 'pixelify-regular',
+	},
+	semiboldText: {
+		fontFamily: 'pixelify-semibold',
+	},
+	boldText: {
+		fontFamily: 'pixelify-bold',
 	},
 });
 

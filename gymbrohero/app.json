@@ -1,32 +1,47 @@
 {
-  "expo": {
-    "name": "gymbrohero",
-    "slug": "gymbrohero",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.gymbrohero"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.anonymous.gymbrohero"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "plugins": [
-      "expo-font"
-    ]
-  }
+	"expo": {
+		"name": "gymbrohero",
+		"slug": "gymbrohero",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/icon.png",
+		"userInterfaceStyle": "light",
+		"splash": {
+			"image": "./assets/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffffff"
+		},
+		"ios": {
+			"supportsTablet": true,
+			"bundleIdentifier": "com.anonymous.gymbrohero"
+		},
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/adaptive-icon.png",
+				"backgroundColor": "#ffffff"
+			},
+			"package": "com.anonymous.gymbrohero"
+		},
+		"web": {
+			"favicon": "./assets/favicon.png"
+		},
+		"fonts": [
+			{
+				"asset": "./assets/fonts/PixelifySans-Bold.ttf"
+			},
+			{
+				"asset": "./assets/fonts/PixelifySans-Regular.ttf",
+				"fontWeight": "bold"
+			},
+			{
+				"asset": "./assets/fonts/PixelifySans-Medium.ttf",
+				"fontWeight": "bold"
+			},
+			{
+				"asset": "./assets/fonts/PixelifySans-SemiBold.ttf",
+				"fontWeight": "bold"
+			}
+		],
+		"plugins": ["expo-font"]
+	}
 }
