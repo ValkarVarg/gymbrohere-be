@@ -10,7 +10,7 @@ export const WorkoutsScreen = ({ navigation, userId }) => {
 	useEffect(() => {
 		const fetchWorkoutData = async () => {
 			try {
-				const response = await fetchWorkouts(userId); // change userId to 1 in order to see some workouts - no workouts currently stored on admin
+				const response = await fetchWorkouts(1); // change userId to 1 in order to see some workouts - no workouts currently stored on admin
 				if (response) {
 					setWorkoutPlan(response);
 				}
@@ -79,10 +79,10 @@ export const WorkoutsScreen = ({ navigation, userId }) => {
 		return (
 			<View style={styles.workoutControls}>
 				<Pressable onPress={handleStartWorkout} style={[styles.button, styles.startButton]}>
-					<Text style={styles.buttonText}>Start</Text>
+					<Text style={[styles.buttonText, styles.semiboldText]}>Start</Text>
 				</Pressable>
 				<Pressable style={[styles.button, styles.deleteButton]}>
-					<Text style={styles.buttonText}>Delete</Text>
+					<Text style={[styles.buttonText, styles.semiboldText]}>Delete</Text>
 				</Pressable>
 			</View>
 		);
@@ -107,18 +107,18 @@ export const WorkoutsScreen = ({ navigation, userId }) => {
 						const exerciseDetails = allExercises.find((ex) => ex.exercise_id === parseInt(exerciseId));
 						return (
 							<View key={index} style={styles.exerciseContainer}>
-								<Text style={styles.exerciseName}>{exerciseDetails ? exerciseDetails.exercise_name : 'Unknown Exercise'}</Text>
+								<Text style={[styles.exerciseName, styles.greenText, styles.boldText]}>{exerciseDetails ? exerciseDetails.exercise_name : 'Unknown Exercise'}</Text>
 								{exercises.map((exercise, subIndex) => (
 									<View key={subIndex} style={styles.exerciseDetails}>
-										<Text>
-											<Text style={styles.bold}>Set: </Text>
+										<Text style={[styles.greenText, styles.regularText]}>
+											<Text style={styles.boldText}>Set: </Text>
 											{exercise.set_id}
 										</Text>
-										<Text>
+										<Text style={[styles.greenText, styles.regularText]}>
 											<Text style={styles.bold}>Reps: </Text>
 											{exercise.reps}
 										</Text>
-										<Text>
+										<Text style={[styles.greenText, styles.regularText]}>
 											<Text style={styles.bold}>Weight: </Text>
 											{exercise.weight}kg
 										</Text>
@@ -128,7 +128,7 @@ export const WorkoutsScreen = ({ navigation, userId }) => {
 						);
 					})
 				) : (
-					<Text style={styles.noWorkout}>No exercises found for this workout plan!</Text>
+					<Text style={[styles.noWorkout, styles.greenText, styles.regularText]}>No exercises found for this workout plan!</Text>
 				)}
 				<WorkoutControls workout={workout} />
 			</View>
@@ -136,14 +136,14 @@ export const WorkoutsScreen = ({ navigation, userId }) => {
 	};
 
 	return (
-		<View style={styles.container}>
-			<Text style={[styles.header, styles.bold]}>Workouts</Text>
+		<View style={[styles.container]}>
+			<Text style={[styles.header, styles.boldText, styles.greenText]}>- Your Workouts -</Text>
 			<FlatList
 				data={workoutPlan}
 				keyExtractor={(item) => item.workout_plan_id.toString()}
 				renderItem={({ item }) => (
 					<View style={styles.workoutItemContainer}>
-						<Text style={[styles.workoutName, styles.bold]}>Plan: {item.workout_plan_name}</Text>
+						<Text style={[styles.workoutName, styles.boldText, styles.greenText]}>Plan: {item.workout_plan_name}</Text>
 						<WorkoutItem workout={item} />
 					</View>
 				)}
@@ -156,9 +156,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		padding: 10,
-	},
-	bold: {
-		fontWeight: 'bold',
+		backgroundColor: '#101D2D',
 	},
 	header: {
 		fontSize: 28,
@@ -168,17 +166,20 @@ const styles = StyleSheet.create({
 	workoutControls: {
 		flexDirection: 'row',
 		justifyContent: 'center',
-		marginTop: 10,
+		marginTop: 7,
+        gap: 25
 	},
 	button: {
 		alignItems: 'center',
 		justifyContent: 'center',
 		padding: 5,
-		borderRadius: 5,
+		borderRadius: 4,
 		marginHorizontal: 5,
 		width: 100,
 		textTransform: 'uppercase',
 		letterSpacing: 2,
+		borderWidth: 4,
+		borderColor: 'white',
 	},
 	startButton: {
 		backgroundColor: 'dodgerblue',
@@ -188,22 +189,25 @@ const styles = StyleSheet.create({
 	},
 	buttonText: {
 		color: 'white',
-		fontWeight: 'bold',
+		letterSpacing: 3,
+		textTransform: 'uppercase',
 	},
 	workoutItemContainer: {
-		marginBottom: 20,
-		borderWidth: 1,
-		borderColor: 'grey',
-		padding: 10,
+		marginBottom: 16,
+		borderWidth: 4,
+		borderRadius: 4,
+		borderColor: '#69C56D',
+		padding: 12,
 	},
 	exerciseContainer: {
-		borderWidth: 1,
-		borderColor: '#ccc',
-		padding: 10,
-		margin: 10,
+		borderWidth: 2,
+		borderColor: '#69C56D',
+		borderStyle: 'dashed',
+		borderRadius: 4,
+		padding: 12,
+		margin: 7,
 	},
 	exerciseName: {
-		fontWeight: 'bold',
 		fontSize: 18,
 		marginBottom: 5,
 	},
@@ -220,6 +224,18 @@ const styles = StyleSheet.create({
 	noWorkout: {
 		textAlign: 'center',
 		margin: 15,
+	},
+	greenText: {
+		color: '#69C56D',
+	},
+	regularText: {
+		fontFamily: 'pixelify-regular',
+	},
+	semiboldText: {
+		fontFamily: 'pixelify-semibold',
+	},
+	boldText: {
+		fontFamily: 'pixelify-bold',
 	},
 });
 
