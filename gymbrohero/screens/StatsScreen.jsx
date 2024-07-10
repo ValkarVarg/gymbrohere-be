@@ -25,9 +25,7 @@ export const StatsScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.header, styles.bold]}>
-        Check Out Your Stats, Bro!
-      </Text>
+      <Text style={styles.header}>- Check Out Your Stats, Bro! -</Text>
       <View style={styles.stats}>
         <Text>
           <Text style={styles.bold}>Workouts Completed: </Text>
@@ -67,21 +65,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   bold: {
-    fontWeight: "bold",
     fontSize: 18,
     color: "#69C56D",
+    fontFamily: "pixelify-bold",
   },
   header: {
-    fontSize: 28,
+    fontFamily: "pixelify-bold",
+    color: "#69C56D",
     textAlign: "center",
-    fontWeight: "bold",
     marginBottom: 30,
+    fontSize: 28,
   },
   stats: {
+    marginBottom: 16,
     borderWidth: 4,
-    gap: 10,
+    borderRadius: 4,
+    borderColor: "#69C56D",
+    padding: 12,
+    // padding: 5,
+    // borderWidth: 4,
+    gap: 20,
   },
   timeText: {
-    color: "white",
+    color: "#69C56D",
   },
 });

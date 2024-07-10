@@ -26,7 +26,8 @@ export const SettingsScreen = ({ navigation, userId }) => {
         >
           <Text
             style={{
-              color: "white",
+              color: "black",
+              fontFamily: "pixelify-regular",
             }}
           >
             account settings
@@ -41,7 +42,8 @@ export const SettingsScreen = ({ navigation, userId }) => {
         >
           <Text
             style={{
-              color: "white",
+              color: "black",
+              fontFamily: "pixelify-regular",
             }}
           >
             profile settings
@@ -83,12 +85,24 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     borderColor: "#000",
     backgroundColor: "#393F62",
-    borderRadius: 0,
+    borderRadius: 6,
   },
   activeButton: {
     backgroundColor: "#69C56D",
   },
   inactiveButton: {
     backgroundColor: "#69C56D",
+  },
+  greenText: {
+    color: "#69C56D",
+  },
+  regularText: {
+    fontFamily: "pixelify-regular",
+  },
+  semiboldText: {
+    fontFamily: "pixelify-semibold",
+  },
+  boldText: {
+    fontFamily: "pixelify-bold",
   },
 });
