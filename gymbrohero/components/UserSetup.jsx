@@ -13,10 +13,11 @@ import Modal from "react-native-modal";
 import { Formik } from "formik";
 import { fetchUsers, patchUser, postUser } from "../api";
 import * as Yup from "yup";
+import {} from "@expo-google-fonts/press-start-2p";
 
 export const UserSetup = ({ userId }) => {
   const [userImage, setUserImage] = useState(
-    require("../images/boychadstill.png")
+    require("../images/boychadprofile1.png")
   );
   const [isModalVisible, setModalVisible] = useState(false);
   const [user, setUser] = useState(null);
@@ -94,7 +95,7 @@ export const UserSetup = ({ userId }) => {
   });
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.container}>
       <Formik
         initialValues={{
           birthdate: user ? user.birthdate : "",
@@ -123,21 +124,22 @@ export const UserSetup = ({ userId }) => {
               />
               <Pressable
                 onPress={() =>
-                  setUserImage(require("../images/girlchadstill.png"))
+                  setUserImage(require("../images/girlchadprofile1.png"))
                 }
               >
                 <Image
-                  source={require("../images/girlchadstill.png")}
+                  source={require("../images/girlchadprofile1.png")}
                   style={styles.smallImage}
                   resizeMode="cover"
                 />
               </Pressable>
             </View>
             <Text style={styles.text}>
-              {user ? `Hi, ${user.username}` : "Hi newbie"}
+              {user ? `Hi, ${user.username}!` : "Hi newbie"}
             </Text>
             <Text style={styles.text}>Enter your deets below:</Text>
-            <Text>Birthdate:</Text>
+            <Text></Text>
+            <Text style={{ color: "white" }}>Birthdate:</Text>
             <TextInput
               placeholder="  YYYY-MM-DD"
               onChangeText={handleChange("birthdate")}
@@ -148,7 +150,7 @@ export const UserSetup = ({ userId }) => {
             {touched.birthdate && errors.birthdate && (
               <Text style={styles.errorText}>{errors.birthdate}</Text>
             )}
-            <Text>Height(cm):</Text>
+            <Text style={{ color: "white" }}>Height(cm):</Text>
             <TextInput
               placeholder="  e.g. 190"
               onChangeText={handleChange("height")}
@@ -159,7 +161,7 @@ export const UserSetup = ({ userId }) => {
             {touched.height && errors.height && (
               <Text style={styles.errorText}>{errors.height}</Text>
             )}
-            <Text>Weight(kg):</Text>
+            <Text style={{ color: "white" }}>Weight(kg):</Text>
             <TextInput
               placeholder="  e.g. 100"
               onChangeText={handleChange("weight")}
@@ -170,7 +172,7 @@ export const UserSetup = ({ userId }) => {
             {touched.weight && errors.weight && (
               <Text style={styles.errorText}>{errors.weight}</Text>
             )}
-            <Text>Goal:</Text>
+            <Text style={{ color: "white" }}>Goal:</Text>
             <TextInput
               placeholder="  e.g. get big"
               onChangeText={handleChange("goal")}
@@ -225,6 +227,11 @@ export const UserSetup = ({ userId }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#101D2D",
+    flex: 1,
+    paddingHorizontal: 20,
+  },
   imageContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -234,13 +241,13 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 200,
-    borderRadius: 100,
+    marginTop: 10,
     marginLeft: 70,
   },
   smallImage: {
     width: 50,
     height: 50,
-    borderRadius: 100,
+    marginTop: 10,
     marginLeft: 20,
   },
   input: {
@@ -254,12 +261,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     fontWeight: "bold",
-    color: "#393F62",
+    color: "#69C56D",
+    fontFamily: "Pixelify_Sans",
   },
   textInput: {
     height: 40,
-    borderColor: "#393F62",
-    borderWidth: 1,
+    borderColor: "black",
+    backgroundColor: "#69C56D",
+    borderWidth: 4,
     marginBottom: 20,
     paddingHorizontal: 10,
   },
@@ -269,7 +278,7 @@ const styles = StyleSheet.create({
   },
   pixelButton: {
     borderRadius: 0,
-    backgroundColor: "#393F62",
+    backgroundColor: "#69C56D",
     borderWidth: 4,
     borderColor: "#000",
   },

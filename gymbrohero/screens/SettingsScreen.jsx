@@ -48,7 +48,6 @@ export const SettingsScreen = ({ navigation, userId }) => {
           </Text>
         </Pressable>
       </View>
-      {/* <Separator /> */}
       {accountSettingsView ? (
         <AccountSettings navigation={navigation} userId={userId} />
       ) : (
@@ -63,8 +62,7 @@ export const Separator = () => <View style={styles.separator} />;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: 16,
-    marginVertical: 10,
+    backgroundColor: "#101D2D",
   },
   title: {
     textAlign: "center",
@@ -88,9 +86,9 @@ const styles = StyleSheet.create({
     borderRadius: 0,
   },
   activeButton: {
-    backgroundColor: "#393F62",
+    backgroundColor: "#69C56D",
   },
   inactiveButton: {
-    backgroundColor: "#393F62",
+    backgroundColor: "#69C56D",
   },
 });
