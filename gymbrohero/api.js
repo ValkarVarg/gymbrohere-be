@@ -119,10 +119,12 @@ export function fetchExercises() {
 }
 
 export function postWorkoutId(workout) {
+
   return gymBroHeroApi.post("/workoutplans", workout).then(({ data }) => {
     return data;
   });
 }
+
 
 export function postUserItem(user_id, payload) {
   return gymBroHeroApi
@@ -142,6 +144,7 @@ export function postWorkoutPlan(planid, workoutPlan) {
       return data;
     });
 }
+
 
 export function patchUserItem(payload) {
   console.log(payload);
