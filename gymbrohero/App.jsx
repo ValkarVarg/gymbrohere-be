@@ -56,18 +56,20 @@ export default function App() {
 						</Stack.Screen>
 						<Stack.Screen
 							name="Main"
-							component={Navbar}
 							options={({ navigation }) => ({
 								header: () => <Topbar navigation={navigation} title="Gymbro Hero" />,
 							})}
-						/>
+						>
+							{(props) => <Navbar {...props} userId={userId} />}
+						</Stack.Screen>
 						<Stack.Screen name="Profile" component={ProfileScreen} />
 						<Stack.Screen name="Settings">{(props) => <SettingsScreen {...props} userId={userId} />}</Stack.Screen>
 						<Stack.Screen name="CreateWorkout" component={CreateWorkoutScreen} />
 						<Stack.Screen name="Stats" component={StatsScreen} />
 						<Stack.Screen name="Run Workout">{(props) => <RunWorkoutScreen {...props} />}</Stack.Screen>
-						<Stack.Screen name="StoreFront" component={StoreFront} />
-						<Stack.Screen name="GridScreen" component={GridScreen} />
+						<Stack.Screen name="StoreFront">{(props) => <StoreFront {...props} userId={userId} />}</Stack.Screen>
+						<Stack.Screen name="GridScreen">{(props) => <GridScreen {...props} userId={userId} />}</Stack.Screen>
+						<Stack.Screen name="HomeScreen">{(props) => <HomeScreen {...props} userId={userId} />}</Stack.Screen>
 						<Stack.Screen name="WorkoutsScreen">{(props) => <WorkoutsScreen {...props} userId={userId} />}</Stack.Screen>
 					</Stack.Navigator>
 				</NavigationContainer>
