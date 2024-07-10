@@ -48,7 +48,13 @@ export const AccountSettings = ({ navigation, userId }) => {
       </View>
       <View>
         <Pressable onPress={seeDeleteOptions} style={styles.button}>
-          <Text>I want to delete my profile </Text>
+          <Text
+            style={{
+              color: "white",
+            }}
+          >
+            DELETE PROFILE{" "}
+          </Text>
         </Pressable>
       </View>
       {viewDelete ? (
@@ -73,7 +79,11 @@ export const AccountSettings = ({ navigation, userId }) => {
       <Separator />
       <View style={styles.sectionHeading}>
         <Text style={styles.sectionHeadingText}>Terms and conditions</Text>
-        <Text>
+        <Text
+          style={{
+            color: "white",
+          }}
+        >
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos,
           obcaecati voluptates! Magni possimus adipisci consequuntur officia
           officiis, cupiditate optio sequi iure nostrum ducimus perspiciatis cum
@@ -91,20 +101,24 @@ const styles = StyleSheet.create({
   },
   switchText: {
     padding: 20,
+    color: "white",
   },
   sectionHeading: {
     marginVertical: 16,
+    color: "white",
   },
   sectionHeadingText: {
     textTransform: "uppercase",
+    color: "white",
   },
   button: {
     alignItems: "center",
     alignSelf: "flex-start",
     padding: 5,
-    borderRadius: 5,
     margin: 10,
-    backgroundColor: "orangered",
+    backgroundColor: "red",
+    borderWidth: 4,
+    borderColor: "#000",
   },
   separator: {
     marginVertical: 8,
