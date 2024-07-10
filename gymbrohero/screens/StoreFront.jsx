@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text, StyleSheet, Pressable, FlatList, Image } from "react-native";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { useExperience } from "../components/XpContext";
 import { fetchItems } from "../api";
 import blackcat from "../assets/items/blackcat.png";
@@ -20,9 +20,9 @@ const imageMap = {
   tabbycat: tabbycat,
 };
 
-export const StoreFront = () => {
+export const StoreFront = ({ userId }) => {
   const [allItems, setAllItems] = useState(null);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null); 
   const [unlockedItems, setUnlockedItems] = useState(null);
   const navigation = useNavigation();
   const { currentExperience } = useExperience();
@@ -33,8 +33,10 @@ export const StoreFront = () => {
       try {
         const items = await fetchItems();
         setAllItems(items);
-        const newUnlockedItems = items.filter((item) => currentExperience >= item.level_available);
-        setUnlockedItems(newUnlockedItems)
+        const newUnlockedItems = items.filter(
+          (item) => currentExperience >= item.level_available
+        );
+        setUnlockedItems(newUnlockedItems);
       } catch (error) {
         console.error("Error fetching items:", error);
       }
@@ -54,15 +56,15 @@ export const StoreFront = () => {
     const isUnlocked = unlockedItems.includes(item);
     if (isUnlocked) {
       setSelectedItem(item);
-      navigation.navigate("GridScreen", { selectedImage: item });
-    }
-    else {
+      navigation.navigate("GridScreen", { selectedImage: item, userId: userId });
+    } else {
       Toast.show({
         type: "error",
         text1: "Locked Item",
         text2: "You need to be more buff to unlock this!",
       });
-  };}
+    }
+  };
 
   const renderItem = ({ item }) => {
     const isSelected = item === selectedItem;
@@ -72,7 +74,7 @@ export const StoreFront = () => {
       !isUnlocked && styles.itemLocked,
       isSelected && styles.itemSelected,
     ];
-  
+
     const itemImage = imageMap[item.item_img];
 
     return (
@@ -89,18 +91,21 @@ export const StoreFront = () => {
       <FlatList
         data={allItems}
         renderItem={renderItem}
-        keyExtractor={(item) => item.item_id.toString()} 
+        keyExtractor={(item) => item.item_id.toString()}
         ListHeaderComponent={<Text style={styles.header}>Store Front</Text>}
         numColumns={3}
       />
-      <Toast ref={toastRef} config={{
-        error: ({ text1, text2, props, ...otherProps }) => (
-          <View style={{ backgroundColor: "red", padding: 10 }}>
-            <Text style={{ color: "white" }}>{text1}</Text>
-            <Text style={{ color: "white", marginTop: 5 }}>{text2}</Text>
-          </View>
-        ),
-      }} />
+      <Toast
+        ref={toastRef}
+        config={{
+          error: ({ text1, text2, props, ...otherProps }) => (
+            <View style={{ backgroundColor: "red", padding: 10 }}>
+              <Text style={{ color: "white" }}>{text1}</Text>
+              <Text style={{ color: "white", marginTop: 5 }}>{text2}</Text>
+            </View>
+          ),
+        }}
+      />
     </View>
   );
 };
