@@ -62,3 +62,14 @@ export function patchCompletedWorkout(user_id, experience) {
       throw err;
     });
 }
+
+export function fetchItems() {
+  return gymBroHeroApi
+    .get(`/items`)
+    .then(({ data }) => {
+      return data.items;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
