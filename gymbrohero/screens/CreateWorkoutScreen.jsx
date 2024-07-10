@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,  useEffect } from 'react';
 import {
   Button,
   TextInput,
@@ -11,22 +11,38 @@ import {
 import { Formik, FieldArray } from 'formik';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { CreateSet } from '../components/CreateSet';
-import { postWorkoutId, postWorkoutPlan } from '../api';
+import { postWorkoutId, postWorkoutPlan, fetchExercises } from '../api';
 
 export const CreateWorkoutScreen = ({ userId }) => {
   const [newIndividualWorkout, setnewIndividualWorkout] = useState([]);
-  const [selected, setSelected] = useState('');
+  const [selectedKey, setSelectedKey] = useState("");
+  const [selectedValue, setSelectedValue] = useState("");
+  const [exerciseData, setExerciseData] = useState([])
 
-  const exerciseData = [
-    { label: 'Squat', value: 1 },
-    { label: 'Bench', value: 2 },
-    { label: 'Deadlift', value: 3 },
-  ];
+//   const exerciseData = [
+//     {key: '1', value: 'Mobiles'},
+//     {key: '2', value: 'Appliances'},
+//     {key: '3', value: 'Cameras'},
+//     {key: '4', value: 'Computers'},
+//     {key: '5', value: 'Vegetables'},
+//     {key: '6', value: 'Diary Products'},
+//     {key: '7', value: 'Drinks'},
+// ];
+
+useEffect(() => {
+  fetchExercises().then((exercises) => {
+    const formattedExercises = exercises.map(exercise => ({
+      key: exercise.exercise_id,
+      value: exercise.exercise_name,
+    }));
+    setExerciseData(formattedExercises);
+  });
+}, []);
 
   const initialValues = {
     workout: {
       workout_plan_name: '',
-      user_id: userId, //user state needs to be passed to here,
+      user_id: userId, 
     },
     ExerciseBlock: [
       {
@@ -35,11 +51,17 @@ export const CreateWorkoutScreen = ({ userId }) => {
     ],
   };
 
+  const handleSelect = (key) => {
+    setSelectedKey(key);
+    const selectedItem = exerciseData.find(item => item.key === key);
+    setSelectedValue(selectedItem ? selectedItem.value : "");
+  };
+
   return (
     <ScrollView>
       <Formik
         initialValues={initialValues}
-        onSubmit={(values) => {
+        onSubmit={(values, {resetForm}) => {
           postWorkoutId(values.workout).then((data) => {
         return [newIndividualWorkout.map((obj, index) => ({
           exercise_id: obj.exerciseId,
@@ -52,7 +74,11 @@ export const CreateWorkoutScreen = ({ userId }) => {
           .then(([IndividualWorkout, planId]) => {
             postWorkoutPlan(planId, IndividualWorkout)
           })
-          alert(JSON.stringify(values, null, 2));
+          .then(() => {
+            resetForm()
+            alert(JSON.stringify('your workout has been added', null, 2));
+          })
+          
         }}
       >
         {({
@@ -83,15 +109,15 @@ export const CreateWorkoutScreen = ({ userId }) => {
                       <View key={index} style={styles.exerciseBlock}>
                         <Text>Exercise {index + 1}</Text>
                         <SelectList
-                          setSelected={(val) => setSelected(val)}
                           onSelect={() =>
                             setFieldValue(
                               `ExerciseBlock[${index}].exerciseId`,
-                              selected
+                              selectedKey
                             )
                           }
+                          setSelected={(key) => handleSelect(key)} 
                           data={exerciseData}
-                          save="value"
+                          save="key"
                           placeholder="select exercise"
                         />
                         <CreateSet
