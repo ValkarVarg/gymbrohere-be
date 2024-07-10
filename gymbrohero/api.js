@@ -120,3 +120,26 @@ export function fetchWorkouts(user_id) {
 		});
  }
  
+
+
+export function postWorkoutId(workout) {
+  return gymBroHeroApi
+    .post("/workoutplans", workout)
+    .then(({data}) => {
+      return data 
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+export function postWorkoutPlan(planid, workoutPlan) {
+  return gymBroHeroApi
+    .post(`/workouts/${planid}`, workoutPlan)
+    .then(({ data }) => {
+      return data  
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}

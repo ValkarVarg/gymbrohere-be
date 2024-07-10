@@ -29,8 +29,11 @@ export const Navbar = ({ userId }) => {
         <Tab.Screen name="Home">
           {(props) => <HomeScreen {...props} userId={userId} />}
         </Tab.Screen>
-        <Tab.Screen name="Workouts" component={WorkoutsScreen} />
-        <Tab.Screen name="CreateWorkout" component={CreateWorkoutScreen} />
+        <Tab.Screen name="Workouts" component={WorkoutsScreen}>
+        </Tab.Screen>
+        <Tab.Screen name="CreateWorkout">
+        {(props) => <CreateWorkoutScreen {...props} userId={userId} />}
+        </Tab.Screen>
         <Tab.Screen name="Stats" component={StatsScreen} />
       </Tab.Navigator>
     </View>
