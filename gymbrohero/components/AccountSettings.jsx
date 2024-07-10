@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable, Switch } from "react-native";
+import { Separator } from "../screens/SettingsScreen";
 
 export const AccountSettings = ({ navigation, userId }) => {
   const [pushIsOn, setPushIsOn] = useState(false);
