@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, StyleSheet, Pressable, FlatList, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  FlatList,
+  Image,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useExperience } from "../components/XpContext";
 import { fetchItems } from "../api";
@@ -22,7 +29,7 @@ const imageMap = {
 
 export const StoreFront = ({ userId }) => {
   const [allItems, setAllItems] = useState(null);
-  const [selectedItem, setSelectedItem] = useState(null); 
+  const [selectedItem, setSelectedItem] = useState(null);
   const [unlockedItems, setUnlockedItems] = useState(null);
   const navigation = useNavigation();
   const { currentExperience } = useExperience();
@@ -56,7 +63,10 @@ export const StoreFront = ({ userId }) => {
     const isUnlocked = unlockedItems.includes(item);
     if (isUnlocked) {
       setSelectedItem(item);
-      navigation.navigate("GridScreen", { selectedImage: item, userId: userId });
+      navigation.navigate("GridScreen", {
+        selectedImage: item,
+        userId: userId,
+      });
     } else {
       Toast.show({
         type: "error",
@@ -92,7 +102,7 @@ export const StoreFront = ({ userId }) => {
         data={allItems}
         renderItem={renderItem}
         keyExtractor={(item) => item.item_id.toString()}
-        ListHeaderComponent={<Text style={styles.header}>Store Front</Text>}
+        ListHeaderComponent={<Text style={styles.header}>- Cool Stuff -</Text>}
         numColumns={3}
       />
       <Toast
@@ -113,6 +123,7 @@ export const StoreFront = ({ userId }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#101D2D",
   },
   loadingContainer: {
     flex: 1,
@@ -120,10 +131,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   header: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: 30,
     textAlign: "center",
     marginVertical: 10,
+    fontFamily: "pixelify-bold",
+    color: "#69C56D",
   },
   item: {
     margin: 10,

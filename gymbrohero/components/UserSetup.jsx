@@ -134,12 +134,16 @@ export const UserSetup = ({ userId }) => {
                 />
               </Pressable>
             </View>
-            <Text style={styles.text}>
+            <Text style={[styles.header, styles.boldText, styles.greenText]}>
               {user ? `Hi, ${user.username}!` : "Hi newbie"}
             </Text>
-            <Text style={styles.text}>Enter your deets below:</Text>
+            <Text style={[styles.header, styles.boldText, styles.greenText]}>
+              Enter your deets below:
+            </Text>
             <Text></Text>
-            <Text style={{ color: "white" }}>Birthdate:</Text>
+            <Text style={[styles.regularText, styles.greenText]}>
+              Birthdate:
+            </Text>
             <TextInput
               placeholder="  YYYY-MM-DD"
               onChangeText={handleChange("birthdate")}
@@ -150,7 +154,9 @@ export const UserSetup = ({ userId }) => {
             {touched.birthdate && errors.birthdate && (
               <Text style={styles.errorText}>{errors.birthdate}</Text>
             )}
-            <Text style={{ color: "white" }}>Height(cm):</Text>
+            <Text style={[styles.regularText, styles.greenText]}>
+              Height(cm):
+            </Text>
             <TextInput
               placeholder="  e.g. 190"
               onChangeText={handleChange("height")}
@@ -161,7 +167,9 @@ export const UserSetup = ({ userId }) => {
             {touched.height && errors.height && (
               <Text style={styles.errorText}>{errors.height}</Text>
             )}
-            <Text style={{ color: "white" }}>Weight(kg):</Text>
+            <Text style={[styles.regularText, styles.greenText]}>
+              Weight(kg):
+            </Text>
             <TextInput
               placeholder="  e.g. 100"
               onChangeText={handleChange("weight")}
@@ -172,7 +180,7 @@ export const UserSetup = ({ userId }) => {
             {touched.weight && errors.weight && (
               <Text style={styles.errorText}>{errors.weight}</Text>
             )}
-            <Text style={{ color: "white" }}>Goal:</Text>
+            <Text style={[styles.regularText, styles.greenText]}>Goal:</Text>
             <TextInput
               placeholder="  e.g. get big"
               onChangeText={handleChange("goal")}
@@ -256,6 +264,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 20,
   },
+  header: {
+    fontSize: 28,
+    textAlign: "center",
+    marginBottom: 15,
+  },
   text: {
     marginTop: 20,
     fontSize: 18,
@@ -269,15 +282,28 @@ const styles = StyleSheet.create({
     borderColor: "black",
     backgroundColor: "#69C56D",
     borderWidth: 4,
+    borderRadius: 4,
     marginBottom: 20,
     paddingHorizontal: 10,
+  },
+  greenText: {
+    color: "#69C56D",
+  },
+  regularText: {
+    fontFamily: "pixelify-regular",
+  },
+  semiboldText: {
+    fontFamily: "pixelify-semibold",
+  },
+  boldText: {
+    fontFamily: "pixelify-bold",
   },
   errorText: {
     color: "red",
     marginBottom: 20,
   },
   pixelButton: {
-    borderRadius: 0,
+    borderRadius: 5,
     backgroundColor: "#69C56D",
     borderWidth: 4,
     borderColor: "#000",
@@ -290,19 +316,18 @@ const styles = StyleSheet.create({
     height: 24,
   },
   pixelButtonText: {
-    color: "white",
+    color: "black",
     fontSize: 18,
-    fontWeight: "bold",
+    fontFamily: "pixelify-semibold",
   },
   modalContent: {
-    backgroundColor: "white",
+    backgroundColor: "#69C56D",
     padding: 20,
-    borderRadius: 10,
+    borderRadius: 4,
     alignItems: "center",
   },
   modalText: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontFamily: "pixelify-semibold",
     marginBottom: 20,
   },
   modalButton: {

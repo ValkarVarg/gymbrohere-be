@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Pressable, Image, ImageBackground } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Image,
+  ImageBackground,
+} from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { LevelUp } from "../components/LevelUp";
 import { gridToAbsolutePosition } from "../components/GridConversion";
@@ -36,7 +43,7 @@ const HomeScreen = ({ navigation, userId }) => {
       };
 
       fetchItems();
-    }, [userId]) 
+    }, [userId])
   );
 
   const renderItemWithPosition = (item) => {
@@ -45,7 +52,10 @@ const HomeScreen = ({ navigation, userId }) => {
     const adjustedX = x + 20;
     const adjustedY = y - 10;
     return (
-      <View key={item.user_item_row_id} style={[styles.itemContainer, { left: adjustedX, top: adjustedY }]}>
+      <View
+        key={item.user_item_row_id}
+        style={[styles.itemContainer, { left: adjustedX, top: adjustedY }]}
+      >
         <Image source={itemImage} style={styles.itemImage} />
       </View>
     );

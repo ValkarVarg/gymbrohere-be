@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { StyleSheet, Text, View, Pressable,} from "react-native";
-import {useExperience} from "./XpContext"
+import { StyleSheet, Text, View, Pressable } from "react-native";
+import { useExperience } from "./XpContext";
 
-export default function Timer({navigation}) {
+export default function Timer({ navigation }) {
   const [running, setRunning] = useState(false);
   const [time, setTime] = useState(0);
   const intervalRef = useRef(null);
@@ -22,14 +22,14 @@ export default function Timer({navigation}) {
   };
 
   const finishTimer = () => {
-    const experience = Math.floor(time/60)
+    const experience = Math.floor(time / 60);
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
     setRunning(false);
     setTime(0);
-    addExperience(experience)
+    addExperience(experience);
   };
 
   useEffect(() => {
@@ -51,7 +51,9 @@ export default function Timer({navigation}) {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.timerText, styles.greenText, styles.semiboldText]}>{formatTime(time)}</Text>
+      <Text style={[styles.timerText, styles.greenText, styles.semiboldText]}>
+        {formatTime(time)}
+      </Text>
       <View style={styles.buttonContainer}>
         <Pressable
           onPress={toggleTimer}
@@ -60,13 +62,17 @@ export default function Timer({navigation}) {
             running ? styles.pauseButton : styles.startButton,
           ]}
         >
-          <Text style={[styles.buttonText, styles.semiboldText]}>{running ? "Pause" : "Start"}</Text>
+          <Text style={[styles.buttonText, styles.semiboldText]}>
+            {running ? "Pause" : "Start"}
+          </Text>
         </Pressable>
         <Pressable
           onPress={finishTimer}
           style={[styles.button, styles.finishButton]}
         >
-          <Text style={[styles.buttonText, styles.semiboldText]}>Finish Workout</Text>
+          <Text style={[styles.buttonText, styles.semiboldText]}>
+            Finish Workout
+          </Text>
         </Pressable>
       </View>
     </View>
@@ -85,44 +91,44 @@ const styles = StyleSheet.create({
     backgroundColor: "dodgerblue",
   },
   pauseButton: {
-    backgroundColor: "yellowgreen",
+    backgroundColor: "#69C56D",
   },
   finishButton: {
     backgroundColor: "orangered",
   },
   buttonContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 25,
-    marginTop: 10
+    marginTop: 10,
   },
   button: {
-		alignItems: 'center',
-		justifyContent: 'center',
-		padding: 5,
-		borderRadius: 4,
-		marginHorizontal: 5,
-		width: 110,
-		textTransform: 'uppercase',
-		letterSpacing: 2,
-		borderWidth: 4,
-		borderColor: 'white',
-	},
-	buttonText: {
-		color: 'white',
-		letterSpacing: 3,
-		textTransform: 'uppercase',
-    textAlign: 'center'
-	},
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 5,
+    borderRadius: 4,
+    marginHorizontal: 5,
+    width: 110,
+    textTransform: "uppercase",
+    letterSpacing: 2,
+    borderWidth: 4,
+    borderColor: "white",
+  },
+  buttonText: {
+    color: "white",
+    letterSpacing: 3,
+    textTransform: "uppercase",
+    textAlign: "center",
+  },
   greenText: {
-		color: '#69C56D',
-	},
-	regularText: {
-		fontFamily: 'pixelify-regular',
-	},
-	semiboldText: {
-		fontFamily: 'pixelify-semibold',
-	},
-	boldText: {
-		fontFamily: 'pixelify-bold',
-	},
+    color: "#69C56D",
+  },
+  regularText: {
+    fontFamily: "pixelify-regular",
+  },
+  semiboldText: {
+    fontFamily: "pixelify-semibold",
+  },
+  boldText: {
+    fontFamily: "pixelify-bold",
+  },
 });

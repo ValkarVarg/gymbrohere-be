@@ -30,7 +30,7 @@ export const AccountSettings = ({ navigation, userId }) => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.sectionHeading}>
         <Text style={styles.sectionHeadingText}>Notification Settings</Text>
       </View>
@@ -52,6 +52,7 @@ export const AccountSettings = ({ navigation, userId }) => {
           <Text
             style={{
               color: "white",
+              fontFamily: "pixelify-semibold",
             }}
           >
             DELETE PROFILE{" "}
@@ -71,7 +72,7 @@ export const AccountSettings = ({ navigation, userId }) => {
           </View>
           <Text>{deleteMessage}</Text>
           <Pressable style={styles.button} onPress={handleDeleteSubmit}>
-            <Text>DELETE</Text>
+            <Text style={styles.semiboldText}>DELETE</Text>
           </Pressable>
         </View>
       ) : (
@@ -83,6 +84,8 @@ export const AccountSettings = ({ navigation, userId }) => {
         <Text
           style={{
             color: "white",
+            fontFamily: "pixelify-regular",
+            fontSize: 18,
           }}
         >
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos,
@@ -96,6 +99,9 @@ export const AccountSettings = ({ navigation, userId }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+  },
   swipeSection: {
     flexDirection: "row",
     gap: 10,
@@ -103,6 +109,8 @@ const styles = StyleSheet.create({
   switchText: {
     padding: 20,
     color: "white",
+    fontFamily: "pixelify-regular",
+    fontSize: 18,
   },
   sectionHeading: {
     marginVertical: 16,
@@ -110,7 +118,9 @@ const styles = StyleSheet.create({
   },
   sectionHeadingText: {
     textTransform: "uppercase",
-    color: "white",
+    color: "#69C56D",
+    fontFamily: "pixelify-bold",
+    fontSize: 20,
   },
   button: {
     alignItems: "center",
@@ -125,5 +135,8 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     borderBottomColor: "#737373",
     borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  semiboldText: {
+    fontFamily: "pixelify-semibold",
   },
 });

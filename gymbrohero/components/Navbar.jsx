@@ -13,13 +13,12 @@ import { ProfileScreen } from "../screens/ProfileScreen";
 
 const Tab = createBottomTabNavigator();
 const screenOptions = { headerShown: false };
-const homeIcon = require("../images/homebroicon.png");
+const homeIcon = require("../images/girlchadstill.png");
 const workoutsIcon = require("../images/workoutsicon.png");
 const creatWorkoutIcon = require("../images/createworkouticon.png");
 const statsIcon = require("../images/statsicon.png");
 
 export const Navbar = ({ userId }) => {
-
   const currentExperience = 0;
   const experienceForNextLevel = 0;
 
@@ -90,7 +89,6 @@ export const Navbar = ({ userId }) => {
             ),
           }}
         />
-
       </Tab.Navigator>
     </View>
   );
@@ -98,21 +96,19 @@ export const Navbar = ({ userId }) => {
 
 export const Topbar = ({ navigation, title }) => {
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <Appbar.Header style={styles.topbarStyle}>
-        <Appbar.Action
-          onPress={() => navigation.navigate("Profile")}
-          icon="account"
-          color="#69C56D"
-        />
-        <Appbar.Content title={title} color="#69C56D" />
-        <Appbar.Action
-          onPress={() => navigation.navigate("Settings")}
-          icon="cog"
-          color="#69C56D"
-        />
-      </Appbar.Header>
-    </SafeAreaView>
+    <Appbar.Header style={styles.topbarStyle}>
+      <Appbar.Action
+        onPress={() => navigation.navigate("Profile")}
+        icon="account"
+        color="#69C56D"
+      />
+      <Appbar.Content title={title} color="#69C56D" />
+      <Appbar.Action
+        onPress={() => navigation.navigate("Settings")}
+        icon="cog"
+        color="#69C56D"
+      />
+    </Appbar.Header>
   );
 };
 
