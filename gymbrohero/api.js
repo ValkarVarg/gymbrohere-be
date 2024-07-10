@@ -122,24 +122,42 @@ export function fetchWorkouts(user_id) {
  
 
 
+
 export function postWorkoutId(workout) {
   return gymBroHeroApi
     .post("/workoutplans", workout)
     .then(({data}) => {
       return data 
+
+ export function postUserItem(user_id, payload) {
+  return gymBroHeroApi
+    .post(`/items/${user_id}`, payload)
+    .then(({ data }) => {
+      return data.user;
     })
     .catch((err) => {
       console.log(err);
     });
 }
 
+
 export function postWorkoutPlan(planid, workoutPlan) {
   return gymBroHeroApi
     .post(`/workouts/${planid}`, workoutPlan)
     .then(({ data }) => {
       return data  
+
+export function patchUserItem(payload) {
+  console.log(payload)
+  return gymBroHeroApi
+    .patch(`/items`, payload)
+    .then(({ data }) => {
+      return data.user;
+
     })
     .catch((err) => {
       console.log(err);
     });
 }
+
+
