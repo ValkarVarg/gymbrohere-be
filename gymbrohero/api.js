@@ -14,10 +14,10 @@ export function fetchUsers(user_id) {
       console.log(err);
     });
 }
-// no avatar patching currently
-export function patchUser(user_id, { birthdate, height, weight, goal }) {
+
+export function patchUser(user_id, payload) {
   return gymBroHeroApi
-    .patch(`/users/${user_id}`, { birthdate, height, weight, goal })
+    .patch(`/users/${user_id}`, payload)
     .then(({ data }) => {
       return data.user;
     })
@@ -25,10 +25,10 @@ export function patchUser(user_id, { birthdate, height, weight, goal }) {
       console.log(err);
     });
 }
-// no avatar posting currently
-export function postUser(user_id, { birthdate, height, weight, goal }) {
+
+export function postUser(user_id, payload) {
   return gymBroHeroApi
-    .post(`/users/${user_id}`, { birthdate, height, weight, goal })
+    .post(`/users/${user_id}`, payload)
     .then(({ data }) => {
       return data.user;
     })

@@ -1,39 +1,59 @@
 import React, { useState } from "react";
 import { View, Text } from "react-native";
 import { UserSetup } from "../components/UserSetup";
-import {AccountSettings} from '../components/AccountSettings'
-import {
-  StyleSheet,
-  Pressable
-} from 'react-native';
+import { AccountSettings } from "../components/AccountSettings";
+import { StyleSheet, Pressable } from "react-native";
 
+export const SettingsScreen = ({ navigation, userId }) => {
+  const [accountSettingsView, setAccountSettingsView] = useState(true);
 
-
-export const SettingsScreen = ({navigation, userId}) => {
-
-    const  [accountSettingsView, setAccountSettingsView] = useState(true)
-
-    const accountClick = () => {
-      setAccountSettingsView(true)
-    }
-    const profileClick = () => {
-      setAccountSettingsView(false)
-    }
+  const accountClick = () => {
+    setAccountSettingsView(true);
+  };
+  const profileClick = () => {
+    setAccountSettingsView(false);
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.fixToText}>
-        <Pressable onPress={accountClick}
-          style={[styles.button, accountSettingsView? styles.activeButton: styles.inactiveButton]}>
-          <Text>account settings</Text>
+        <Pressable
+          onPress={accountClick}
+          style={[
+            styles.button,
+            accountSettingsView ? styles.activeButton : styles.inactiveButton,
+          ]}
+        >
+          <Text
+            style={{
+              color: "white",
+            }}
+          >
+            account settings
+          </Text>
         </Pressable>
-        <Pressable onPress={profileClick}
-          style={[styles.button, accountSettingsView? styles.inactiveButton: styles.activeButton]}>
-          <Text>profile settings</Text>
+        <Pressable
+          onPress={profileClick}
+          style={[
+            styles.button,
+            accountSettingsView ? styles.inactiveButton : styles.activeButton,
+          ]}
+        >
+          <Text
+            style={{
+              color: "white",
+            }}
+          >
+            profile settings
+          </Text>
         </Pressable>
       </View>
-      <Separator />
-      {accountSettingsView? <AccountSettings navigation={navigation} userId={userId}/> : <UserSetup />}
+      {/* <Separator /> */}
+      {accountSettingsView ? (
+        <AccountSettings navigation={navigation} userId={userId} />
+      ) : (
+        <UserSetup userId={userId} />
+      )}
     </View>
   );
 };
@@ -44,31 +64,33 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginHorizontal: 16,
-    marginVertical: 10
+    marginVertical: 10,
   },
   title: {
-    textAlign: 'center',
+    textAlign: "center",
     marginVertical: 8,
   },
   fixToText: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   separator: {
     marginVertical: 8,
-    borderBottomColor: '#737373',
+    borderBottomColor: "#737373",
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   button: {
-    padding: 10,
-    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderWidth: 4,
+    borderColor: "#000",
+    backgroundColor: "#393F62",
+    borderRadius: 0,
   },
   activeButton: {
-    backgroundColor: 'red'
-  }, 
+    backgroundColor: "#393F62",
+  },
   inactiveButton: {
-    backgroundColor: 'blue'
-  }
-
+    backgroundColor: "#393F62",
+  },
 });
