@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button, TextInput, View, Text, ScrollView } from "react-native";
-import { SelectList } from 'react-native-dropdown-select-list'
 import { Formik } from "formik";
 import { CreateExerciseBlock } from "../components/CreateExerciseBlock";
 import { CreateSet } from "../components/CreateSet";

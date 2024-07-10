@@ -10,12 +10,13 @@ import {
 } from 'react-native';
 
 export const CreateSet = (props) => {
+  console.log(props.exerciseObject.exerciseId, 'exercise obj in create set')
   const initialValues = {
     friends: [
       {
-        ...props.props.ExerciseBlock[0],
+        exerciseId: props.exerciseObject.exerciseId,
         setId: '1',
-        workouReps: '',
+        workoutReps: '',
         workoutWeight: '',
       },
     ],
@@ -23,12 +24,13 @@ export const CreateSet = (props) => {
 
   return (
     <SafeAreaView>
-      <Text>in create set!</Text>
       <Formik
         initialValues={initialValues}
         onSubmit={async (values) => {
           await new Promise((r) => setTimeout(r, 500));
-          alert(JSON.stringify(values, null, 2));
+          alert(JSON.stringify(values, null, 2))
+          props.setnewIndividualWorkout(values)
+          console.log(values, 'new workout exercise');
         }}
       >
         {({ values, handleChange, handleBlur, handleSubmit }) => (
@@ -37,15 +39,15 @@ export const CreateSet = (props) => {
               {(arrayHelpers) => (
                 <View>
                   {values.friends.map((friend, index) => (
-                    <View key={index}>
+                    <View key={index} style={styles.row}>
                       <Text>
                         set {index + 1}
                       </Text>
                       <TextInput
                         style={styles.input}
-                        onChangeText={handleChange(`friends[${index}].workouReps`)}
-                        onBlur={handleBlur(`friends[${index}].workouReps`)}
-                        value={friend.workouReps}
+                        onChangeText={handleChange(`friends[${index}].workoutReps`)}
+                        onBlur={handleBlur(`friends[${index}].workoutReps`)}
+                        value={friend.workoutReps}
                         placeholder="reps"
                       />
                       <TextInput
@@ -67,10 +69,10 @@ export const CreateSet = (props) => {
                     title="Add Set"
                     onPress={() => {
                       arrayHelpers.push({
-                        orderId: '1',
+                        ...props.exerciseObject,
                         exerciseId: '', 
                         setId: `${(values.friends.length) + 1}`,
-                        workouReps: '',
+                        workoutReps: '',
                         workoutWeight: '',
                       });
                     }}
@@ -94,7 +96,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical: 5,
   },
-  friendContainer: {
-    marginBottom: 20,
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 5,
   },
 });
