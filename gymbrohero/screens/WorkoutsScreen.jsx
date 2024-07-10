@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'center',
 		marginTop: 7,
-        gap: 25
+		gap: 25,
 	},
 	button: {
 		alignItems: 'center',
