@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable, Switch } from "react-native";
-import { Separator } from "../screens/SettingsScreen";
 
 export const AccountSettings = ({ navigation, userId }) => {
   const [pushIsOn, setPushIsOn] = useState(false);
@@ -43,7 +42,7 @@ export const AccountSettings = ({ navigation, userId }) => {
           thumbColor={pushIsOn ? "#14a174" : "#f4f3f4"}
         />
       </View>
-      <Separator />
+      <View style={styles.separator} />
       <View style={styles.sectionHeading}>
         <Text style={styles.sectionHeadingText}>Your data</Text>
       </View>
@@ -106,5 +105,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     margin: 10,
     backgroundColor: "orangered",
+  },
+  separator: {
+    marginVertical: 8,
+    borderBottomColor: "#737373",
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });
