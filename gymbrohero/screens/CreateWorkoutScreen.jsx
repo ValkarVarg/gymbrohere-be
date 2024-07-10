@@ -5,14 +5,6 @@ import { CreateExerciseBlock } from "../components/CreateExerciseBlock";
 import { CreateSet } from "../components/CreateSet";
 
 export const CreateWorkoutScreen = (props) => {
-    const [exerciseSelected, setExerciseSelected] = useState('')
-
-    const exerciseData = [
-      {key:1 ,value: 'squat'},
-      {key:1 ,value: 'bench'},
-      {key:1 ,value: 'deadlift'},
-    ]
-
 
   return (
 

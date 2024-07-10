@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Button, TextInput, View, Text, StyleSheet, SafeAreaView } from "react-native";
+import { Button, View, Text, StyleSheet, SafeAreaView } from "react-native";
 import { Formik, FieldArray } from "formik";
 import { CreateSet } from "./CreateSet";
 import { SelectList } from "react-native-dropdown-select-list";
 
 export const CreateExerciseBlock = () => {
-  const [newIndividualWorkout, setnewIndividualWorkout] = useState({})
+  const [newIndividualWorkout, setnewIndividualWorkout] = useState([])
+  const [selected, setSelected] = useState('');
+  console.log(newIndividualWorkout, 'updated new workout state')
 
   const exerciseData = [
     { label: 'Squat', value: 'squat' },
@@ -36,20 +38,17 @@ export const CreateExerciseBlock = () => {
               {(arrayHelpers) => (
                 <View>
                   {values.ExerciseBlock.map((block, index) => (
-                    <View key={index}>
+                    <View key={index} style={styles.exerciseBlock}>
                       <Text>Exercise {index + 1}</Text>
                       <SelectList
-                        setSelected={(val) => setFieldValue(`ExerciseBlock[${index}].exerciseId`, val)}
+                      setSelected={(val) => setSelected(val)}
+                        onSelect={() => setFieldValue(`ExerciseBlock[${index}].exerciseId`, selected)}
                         data={exerciseData}
                         save="value"
                         placeholder='select exercise'
-                        value={values.ExerciseBlock[index].exerciseId}
+
                       />
-                      <CreateSet exerciseObject={values.ExerciseBlock[index]} newIndividualWorkout={newIndividualWorkout} setnewIndividualWorkout={setnewIndividualWorkout}/>
-                      <Button
-                        title="remove exercise"
-                        onPress={() => arrayHelpers.remove(index)}
-                      />
+                      <CreateSet exerciseObject={values.ExerciseBlock[index]} newIndividualWorkout={newIndividualWorkout} setnewIndividualWorkout={setnewIndividualWorkout} removeExercise={() => arrayHelpers.remove(index)}/>
                     </View>
                   ))}
                   <Button
@@ -79,8 +78,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical: 5,
   },
-  friendContainer: {
-    marginBottom: 20,
+  exerciseBlock: {
+    borderWidth: 1,
+    borderColor: 'gray',
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 5,
+  },
+  inlineButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10,
   },
 });
 

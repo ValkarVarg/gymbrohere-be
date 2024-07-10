@@ -10,51 +10,47 @@ import {
 } from 'react-native';
 
 export const CreateSet = (props) => {
-  console.log(props.exerciseObject.exerciseId, 'exercise obj in create set')
+  const currentExercise = props.exerciseObject.exerciseId;
   const initialValues = {
-    friends: [
-      {
-        exerciseId: props.exerciseObject.exerciseId,
-        setId: '1',
-        workoutReps: '',
-        workoutWeight: '',
-      },
-    ],
+    sets: [],
   };
+
 
   return (
     <SafeAreaView>
       <Formik
         initialValues={initialValues}
-        onSubmit={async (values) => {
-          await new Promise((r) => setTimeout(r, 500));
-          alert(JSON.stringify(values, null, 2))
-          props.setnewIndividualWorkout(values)
-          console.log(values, 'new workout exercise');
-        }}
+        onSubmit={    async (values) => {
+            await new Promise((r) => setTimeout(r, 500));
+            alert(JSON.stringify(values, null, 2));
+              props.setnewIndividualWorkout(otherExercises => {
+                return [...otherExercises, ...values.sets]})
+          }}
       >
         {({ values, handleChange, handleBlur, handleSubmit }) => (
           <View>
-            <FieldArray name="friends">
+            <FieldArray name="sets">
               {(arrayHelpers) => (
                 <View>
-                  {values.friends.map((friend, index) => (
+                  {values.sets.map((set, index) => (
                     <View key={index} style={styles.row}>
-                      <Text>
-                        set {index + 1}
-                      </Text>
+                      <Text>set {index + 1}</Text>
                       <TextInput
                         style={styles.input}
-                        onChangeText={handleChange(`friends[${index}].workoutReps`)}
-                        onBlur={handleBlur(`friends[${index}].workoutReps`)}
-                        value={friend.workoutReps}
+                        onChangeText={handleChange(
+                          `sets[${index}].workoutReps`
+                        )}
+                        onBlur={handleBlur(`sets[${index}].workoutReps`)}
+                        value={set.workoutReps}
                         placeholder="reps"
                       />
                       <TextInput
                         style={styles.input}
-                        onChangeText={handleChange(`friends[${index}].workoutWeight`)}
-                        onBlur={handleBlur(`friends[${index}].workoutWeight`)}
-                        value={friend.weight}
+                        onChangeText={handleChange(
+                          `sets[${index}].workoutWeight`
+                        )}
+                        onBlur={handleBlur(`sets[${index}].workoutWeight`)}
+                        value={set.weight}
                         placeholder="workoutWeight"
                       />
                       <Button
@@ -69,9 +65,8 @@ export const CreateSet = (props) => {
                     title="Add Set"
                     onPress={() => {
                       arrayHelpers.push({
-                        ...props.exerciseObject,
-                        exerciseId: '', 
-                        setId: `${(values.friends.length) + 1}`,
+                        exerciseId: `${currentExercise}`,
+                        setId: `${values.sets.length + 1}`,
                         workoutReps: '',
                         workoutWeight: '',
                       });
@@ -80,7 +75,13 @@ export const CreateSet = (props) => {
                 </View>
               )}
             </FieldArray>
-            <Button onPress={handleSubmit} title="Submit" />
+            <View style={styles.inlineButtons}>
+              <Button onPress={handleSubmit} title="Submit Set" />
+              <Button
+                title="Remove Exercise"
+                onPress={() => props.removeExercise()}
+              />
+            </View>
           </View>
         )}
       </Formik>
@@ -100,5 +101,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 5,
+  },
+  inlineButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10,
   },
 });
