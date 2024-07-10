@@ -1,15 +1,26 @@
-import React from "react";
-import { Button, TextInput, View, Text } from "react-native";
+import React, { useState } from "react";
+import { Button, TextInput, View, Text, ScrollView } from "react-native";
 import { Formik } from "formik";
+import { CreateExerciseBlock } from "../components/CreateExerciseBlock";
+import { CreateSet } from "../components/CreateSet";
 
 export const CreateWorkoutScreen = (props) => {
+    const [exerciseSelected, setExerciseSelected] = useState('')
+
+    const exerciseData = [
+      {key:1 ,value: 'squat'},
+      {key:1 ,value: 'bench'},
+      {key:1 ,value: 'deadlift'},
+    ]
+
+
   return (
+
+    <ScrollView>
     <Formik
       initialValues={{
-        workoutName: "",
-        workoutSets: "",
-        workoutReps: "",
-        workoutWeight: "",
+        workout_plan_name: "",
+        user_id: '' //user state needs to be passed to here. 
       }}
       onSubmit={(values) => console.log(values)}
     >
@@ -17,9 +28,9 @@ export const CreateWorkoutScreen = (props) => {
         <View style={{ padding: 20 }}>
           <Text>Name Your Workout:</Text>
           <TextInput
-            onChangeText={handleChange("workoutName")}
-            onBlur={handleBlur("workoutName")}
-            value={values.workoutName}
+            onChangeText={handleChange("workout_plan_name")}
+            onBlur={handleBlur("workout_plan_name")}
+            value={values.workout_plan_name}
             style={{
               height: 40,
               borderColor: "gray",
@@ -27,45 +38,11 @@ export const CreateWorkoutScreen = (props) => {
               marginBottom: 20,
             }}
           />
-          <Text>Sets:</Text>
-          <TextInput
-            onChangeText={handleChange("workoutSets")}
-            onBlur={handleBlur("workoutSets")}
-            value={values.workoutSets}
-            style={{
-              height: 40,
-              borderColor: "gray",
-              borderWidth: 1,
-              marginBottom: 20,
-            }}
-          />
-          <Text>Reps:</Text>
-          <TextInput
-            onChangeText={handleChange("workoutReps")}
-            onBlur={handleBlur("workoutReps")}
-            value={values.workoutReps}
-            style={{
-              height: 40,
-              borderColor: "gray",
-              borderWidth: 1,
-              marginBottom: 20,
-            }}
-          />
-          <Text>Weight:</Text>
-          <TextInput
-            onChangeText={handleChange("workoutWeight")}
-            onBlur={handleBlur("workoutWeight")}
-            value={values.workoutWeight}
-            style={{
-              height: 40,
-              borderColor: "gray",
-              borderWidth: 1,
-              marginBottom: 20,
-            }}
-          />
+             <CreateExerciseBlock></CreateExerciseBlock>
           <Button onPress={handleSubmit} title="Create Workout" />
         </View>
       )}
     </Formik>
+    </ScrollView>
   );
 };
