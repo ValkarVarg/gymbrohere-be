@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Pressable, Image, ImageBackground } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { LevelUp } from "../components/LevelUp";
-import { gridToAbsolutePosition } from "../components/GridConversion"; 
-import { fetchUserItems } from "../api"; 
+import { gridToAbsolutePosition } from "../components/GridConversion";
+import { fetchUserItems } from "../api";
 import blackcat from "../assets/items/blackcat.png";
 import bunny from "../assets/items/bunny.png";
 import lizard from "../assets/items/lizard.png";
@@ -19,28 +20,32 @@ const imageMap = {
   tabbycat: tabbycat,
 };
 
-export default function HomeScreen({ navigation, userId }) {
+const HomeScreen = ({ navigation, userId }) => {
   const [userItems, setUserItems] = useState([]);
 
-  useEffect(() => {
-    const fetchItems = async () => {
-      try {
-        if (!userId) return;
-        const items = await fetchUserItems(userId);
-        setUserItems(items);
-      } catch (error) {
-        console.error("Error fetching user items:", error);
-      }
-    };
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchItems = async () => {
+        try {
+          if (!userId) return;
+          const items = await fetchUserItems(userId);
+          setUserItems(items);
+        } catch (error) {
+          console.error("Error fetching user items:", error);
+        }
+      };
 
-    fetchItems();
-  }, [userId]); 
+      fetchItems();
+    }, [userId]) 
+  );
 
   const renderItemWithPosition = (item) => {
     const itemImage = imageMap[item.item_img];
-    const { x, y } = gridToAbsolutePosition(item.display_location, 400, 4); 
+    const { x, y } = gridToAbsolutePosition(item.display_location, 400, 4);
+    const adjustedX = x + 20;
+    const adjustedY = y - 10;
     return (
-      <View key={item.user_item_row_id} style={[styles.itemContainer, { left: x, top: y }]}>
+      <View key={item.user_item_row_id} style={[styles.itemContainer, { left: adjustedX, top: adjustedY }]}>
         <Image source={itemImage} style={styles.itemImage} />
       </View>
     );
@@ -49,18 +54,18 @@ export default function HomeScreen({ navigation, userId }) {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../images/background.jpg")} 
+        source={require("../images/background.jpg")}
         style={styles.backgroundImage}
       >
-        <LevelUp/>
+        <LevelUp />
         <View style={styles.centeredContainer}>
           <Image
-            source={require("../images/hero.png")}
+            source={require("../images/girlchadstill.png")}
             style={styles.heroImage}
           />
         </View>
 
-        {userItems.map(item => renderItemWithPosition(item))}
+        {userItems.map((item) => renderItemWithPosition(item))}
 
         <Pressable
           onPress={() => navigation.navigate("StoreFront")}
@@ -74,7 +79,7 @@ export default function HomeScreen({ navigation, userId }) {
       </ImageBackground>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -82,26 +87,26 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
+    resizeMode: "cover",
+    justifyContent: "center",
   },
   centeredContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   heroImage: {
-    width: 400,
-    height: 400,
-    resizeMode: 'contain',
+    width: 300,
+    height: 300,
+    resizeMode: "contain",
     position: "absolute",
     bottom: 50,
-    right: 0,
+    right: 40,
   },
   homeText: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 24,
-    color: '#fff', 
+    color: "#fff",
   },
   storeButton: {
     width: 50,
@@ -120,8 +125,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   itemImage: {
-    width: 45,
-    height: 45,
+    width: 50,
+    height: 50,
     resizeMode: "contain",
   },
 });
+
+export default HomeScreen;
