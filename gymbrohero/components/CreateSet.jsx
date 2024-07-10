@@ -76,7 +76,7 @@ export const CreateSet = (props) => {
               )}
             </FieldArray>
             <View style={styles.inlineButtons}>
-              <Button onPress={handleSubmit} title="Submit Set" />
+              <Button onPress={handleSubmit} title="Submit Exercise" />
               <Button
                 title="Remove Exercise"
                 onPress={() => props.removeExercise()}
