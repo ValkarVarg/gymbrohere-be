@@ -17,7 +17,7 @@ export const ProfileScreen = ({ userId }) => {
   if (!user) {
     return (
       <View style={styles.container}>
-        <Text>Loading...</Text>
+        <Text style={styles.profileLoading}>Go make a profile bro...</Text>
       </View>
     );
   }
@@ -49,9 +49,13 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
   },
+  profileLoading: {
+    fontFamily: "pixelify-semibold",
+    color: "#69C56D",
+  },
   text: {
     marginTop: 20,
-    fontSize: 18,
+    fontSize: 23,
     fontFamily: "pixelify-semibold",
     color: "#69C56D",
   },
