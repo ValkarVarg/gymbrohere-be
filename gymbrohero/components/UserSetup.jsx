@@ -208,22 +208,15 @@ export const UserSetup = ({ userId }) => {
               ]}
               onPress={handleSubmit}
             >
-              <Image
-                source={require("../images/buffarm.png")}
-                style={styles.buttonIcon}
-                resizeMode="contain"
-              />
               <Text style={styles.pixelButtonText}>
                 {user ? "Edit Deets" : "Get Big"}
               </Text>
             </Pressable>
             <Modal isVisible={isModalVisible}>
               <View style={styles.modalContent}>
-                <Text style={styles.modalText}>
-                  Cool! Check out your new gym space!
-                </Text>
+                <Text style={styles.modalText}>Cool, now go get big!</Text>
                 <Pressable onPress={closeModal}>
-                  <Text style={styles.modalButton}>Close</Text>
+                  <Text style={styles.modalButton}>close</Text>
                 </Pressable>
               </View>
             </Modal>
@@ -323,15 +316,20 @@ const styles = StyleSheet.create({
   modalContent: {
     backgroundColor: "#69C56D",
     padding: 20,
-    borderRadius: 4,
     alignItems: "center",
+    borderRadius: 15,
+    borderWidth: 4,
+    borderStyle: "dashed",
+    borderColor: "#69C56D",
   },
   modalText: {
     fontFamily: "pixelify-semibold",
+    fontSize: 18,
     marginBottom: 20,
   },
   modalButton: {
     fontSize: 16,
-    color: "blue",
+    color: "black",
+    fontFamily: "pixelify-regular",
   },
 });
