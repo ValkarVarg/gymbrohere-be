@@ -127,11 +127,9 @@ export function postWorkoutId(workout) {
 }
 
 export function postWorkoutPlan(planid, workoutPlan) {
-	console.log(planid, workoutPlan, 'in post workout')
 	return gymBroHeroApi
 	  .post(`/workouts/${planid}`, workoutPlan)
 	  .then(({ data }) => {
-		console.log(data, 'data from post')
 		return data  })
 		.catch((err) => {
 			console.log(err)

@@ -55,7 +55,7 @@ export const CreateWorkoutScreen = ({ userId }) => {
 									weight: Number(obj.workoutWeight),
 									order_id: index + 1 
 								})),
-								data.workout.user_id
+								data.workout.workout_plan_id
 							];
 						})
 						.then(([IndividualWorkout, planId]) => {
