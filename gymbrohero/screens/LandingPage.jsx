@@ -56,7 +56,9 @@ export const LandingPage = ({ navigation, handleLogin }) => {
 			axios
 				.post('https://gymbrohero.onrender.com/api/userlogin/', userData)
 				.then((response) => {
+					handleLogin(response.user_id)
 					navigation.navigate('Main');
+					navigation.navigate('Profile');
 				})
 				.catch((error) => {
 					console.error('Error registering user:', error);
