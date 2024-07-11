@@ -124,6 +124,13 @@ export function postWorkoutId(workout) {
 	});
 }
 
+export function postWorkoutPlan(planid, workoutPlan) {
+	return gymBroHeroApi
+	  .post(`/workouts/${planid}`, workoutPlan)
+	  .then(({ data }) => {
+		return data  })
+	  }
+
 export function postUserItem(user_id, payload) {
 	return gymBroHeroApi
 		.post(`/items/${user_id}`, payload)
@@ -145,3 +152,4 @@ export function patchUserItem(payload) {
 			console.log(err);
 		});
 }
+

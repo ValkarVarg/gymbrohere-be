@@ -34,18 +34,19 @@ export const CreateWorkoutScreen = ({ userId }) => {
 		],
 	};
 
-	const handleSelect = (key, index, setFieldValue) => {
+	const handleSelect = (key) => {
 		setSelectedKey(key);
-		const selectedItem = exerciseData.find((item) => item.key === key);
-		setSelectedValue(selectedItem ? selectedItem.value : '');
-		setFieldValue(`ExerciseBlock[${index}].exerciseId`, key);
-	};
+		const selectedItem = exerciseData.find(item => item.key === key);
+		setSelectedValue(selectedItem ? selectedItem.value : "");
+	  };
 
 	return (
 		<ScrollView style={styles.container}>
 			<Formik
 				initialValues={initialValues}
 				onSubmit={(values, { resetForm }) => {
+					console.log(newIndividualWorkout)
+					console.log(values)
 					postWorkoutId(values.workout)
 						.then((data) => {
 							return [
@@ -56,14 +57,15 @@ export const CreateWorkoutScreen = ({ userId }) => {
 									weight: obj.workoutWeight,
 									order_id: index,
 								})),
-								data.workout.workout_plan_id,
+								data.workout.user_id,
 							];
 						})
 						.then(([IndividualWorkout, planId]) => {
 							postWorkoutPlan(planId, IndividualWorkout);
 						})
-						.then(() => {
+						.then((output) => {
 							resetForm();
+							setnewIndividualWorkout([])
 							alert(JSON.stringify('your workout has been added', null, 2));
 						});
 				}}
@@ -83,8 +85,13 @@ export const CreateWorkoutScreen = ({ userId }) => {
 													boxStyles={styles.dropdownBox}
 													dropdownStyles={styles.dropdownContainer}
 													fontFamily={'pixelify-regular'}
-													onSelect={(key) => handleSelect(key, index, setFieldValue)}
-													setSelected={(key) => handleSelect(key, index, setFieldValue)}
+													onSelect={() =>
+														setFieldValue(
+														  `ExerciseBlock[${index}].exerciseId`,
+														  selectedKey
+														)
+													  }
+													  setSelected={(key) => handleSelect(key)} 
 													data={exerciseData}
 													save="key"
 													placeholder="select exercise"

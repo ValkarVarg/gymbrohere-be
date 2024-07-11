@@ -1,6 +1,7 @@
 import React from 'react';
 import { Formik, FieldArray } from 'formik';
 import { View, Text, Pressable, SafeAreaView, TextInput, StyleSheet } from 'react-native';
+import { CurrentRenderContext } from '@react-navigation/native';
 
 export const CreateSet = (props) => {
 	const currentExercise = props.exerciseObject.exerciseId;

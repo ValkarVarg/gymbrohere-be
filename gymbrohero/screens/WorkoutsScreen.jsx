@@ -10,7 +10,7 @@ export const WorkoutsScreen = ({ navigation, userId }) => {
 	useEffect(() => {
 		const fetchWorkoutData = async () => {
 			try {
-				const response = await fetchWorkouts(1); // change userId to 1 in order to see some workouts - no workouts currently stored on admin
+				const response = await fetchWorkouts(userId); // change userId to 1 in order to see some workouts - no workouts currently stored on admin
 				if (response) {
 					setWorkoutPlan(response);
 				}
