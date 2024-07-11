@@ -17,7 +17,6 @@ export const GridScreen = ({ userId }) => {
     const loadUserItems = async () => {
       try {
         const items = await fetchUserItems(userId);
-        console.log(items)
         updateGridWithUserItems(items);
       } catch (error) {
         console.error("Error fetching user items:", error);
