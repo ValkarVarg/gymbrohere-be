@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, Pressable } from 'react-native';
 import { fetchWorkouts, fetchIndividualWorkouts, fetchExercises } from '../api';
+import { useFocusEffect } from "@react-navigation/native";
 
 export const WorkoutsScreen = ({ navigation, userId }) => {
-	const [workoutPlan, setWorkoutPlan] = useState([]);
+	const [workoutPlan, setWorkoutPlan] = useState(null);
 	const [individualWorkout, setIndividualWorkout] = useState([]);
 	const [allExercises, setAllExercises] = useState([]);
 
-	useEffect(() => {
+	useFocusEffect(
+		React.useCallback(() => {
 		const fetchWorkoutData = async () => {
 			try {
-				const response = await fetchWorkouts(userId); // change userId to 1 in order to see some workouts - no workouts currently stored on admin
+				const response = await fetchWorkouts(userId); 
 				if (response) {
 					setWorkoutPlan(response);
 				}
@@ -19,13 +21,18 @@ export const WorkoutsScreen = ({ navigation, userId }) => {
 			}
 		};
 		fetchWorkoutData();
-	}, [userId]);
+	}, [userId])
+);
+
 
 	useEffect(() => {
 		const fetchAllIndividualWorkouts = async () => {
 			try {
-				if (workoutPlan.length > 0) {
-					const promises = workoutPlan.map((plan) => fetchIndividualWorkouts(plan.workout_plan_id));
+				if (workoutPlan) {
+					console.log(workoutPlan)
+					const promises = workoutPlan.map((plan) => {
+						console.log(plan)
+						fetchIndividualWorkouts(plan.workout_plan_id)});
 					const workouts = await Promise.all(promises);
 					const flatWorkouts = workouts.flat();
 					setIndividualWorkout(flatWorkouts);
@@ -34,8 +41,9 @@ export const WorkoutsScreen = ({ navigation, userId }) => {
 				console.log(error, '<--- Error fetching individual workouts');
 			}
 		};
-		if (workoutPlan.length > 0) {
-			fetchAllIndividualWorkouts();
+		if (workoutPlan) { 
+			try{fetchAllIndividualWorkouts();}
+			catch (error) { console.log(error, '<--- Error fetching all workouts');}
 		}
 	}, [workoutPlan]);
 
