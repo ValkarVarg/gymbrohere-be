@@ -136,7 +136,6 @@ export function postUserItem(user_id, payload) {
 }
 
 export function patchUserItem(payload) {
-	console.log(payload);
 	return gymBroHeroApi
 		.patch(`/items`, payload)
 		.then(({ data }) => {

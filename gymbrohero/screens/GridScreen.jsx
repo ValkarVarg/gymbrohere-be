@@ -17,6 +17,7 @@ export const GridScreen = ({ userId }) => {
     const loadUserItems = async () => {
       try {
         const items = await fetchUserItems(userId);
+        console.log(items)
         updateGridWithUserItems(items);
       } catch (error) {
         console.error("Error fetching user items:", error);
@@ -68,7 +69,6 @@ export const GridScreen = ({ userId }) => {
 
   const handleReplaceImage = async (index) => {
     try {
-      console.log(grid)
       const user_item_row_id = grid[index].user_item_row_id;
       const display_location = getGridReference(index);
       await patchUserItem({user_item_row_id, userId, display_location, item_id: selectedImage.item_id });

@@ -43,7 +43,6 @@ export const Navbar = ({ userId }) => {
       >
         <Tab.Screen
           name="Home"
-          component={HomeScreen}
           options={{
             tabBarIcon: () => (
               <Image
@@ -52,7 +51,9 @@ export const Navbar = ({ userId }) => {
               />
             ),
           }}
-        />
+        >
+          {(props) => <HomeScreen {...props} userId={userId} />}
+        </Tab.Screen>
         <Tab.Screen
           name="Workouts"
           component={WorkoutsScreen}
@@ -67,7 +68,6 @@ export const Navbar = ({ userId }) => {
         />
         <Tab.Screen
           name="CreateWorkout"
-          component={CreateWorkoutScreen}
           options={{
             tabBarIcon: () => (
               <Image
@@ -76,7 +76,9 @@ export const Navbar = ({ userId }) => {
               />
             ),
           }}
-        />
+          >
+          {(props) => <CreateWorkoutScreen {...props} userId={userId} />}
+          </Tab.Screen>
         <Tab.Screen
           name="Stats"
           component={StatsScreen}
