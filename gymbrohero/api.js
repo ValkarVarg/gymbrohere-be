@@ -97,7 +97,6 @@ export function fetchWorkouts(user_id) {
 }
 
 export function fetchIndividualWorkouts(workout_plan_id) {
-	console.log(workout_plan_id)
 	return gymBroHeroApi
 		.get(`/individualworkouts/${workout_plan_id}`)
 		.then(({ data }) => {
@@ -105,7 +104,6 @@ export function fetchIndividualWorkouts(workout_plan_id) {
 		})
 		.catch((err) => {
 			console.log(err);
-			console.log('in fetch indi workouts')
 		});
 }
 

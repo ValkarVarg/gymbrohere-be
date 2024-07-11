@@ -46,10 +46,10 @@ export const UserSetup = ({ userId }) => {
     avatar_shirt_colour: 1,
   };
 
-  const stats = {
-    complete_workouts: 1,
-    experience: 1,
-  };
+  // const stats = {
+  //   complete_workouts: 0,
+  //   experience: 0,
+  // };
 
   const handleSubmit = (values) => {
     const transformedValues = {
@@ -58,7 +58,7 @@ export const UserSetup = ({ userId }) => {
       weight: parseInt(values.weight),
       goal: values.goal,
       ...avatar,
-      ...stats,
+      // ...stats,
     };
     if (user) {
       patchUser(userId, transformedValues)

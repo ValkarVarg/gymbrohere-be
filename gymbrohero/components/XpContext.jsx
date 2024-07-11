@@ -17,7 +17,7 @@ export const ExperienceProvider = ({ children, userId }) => {
 
   const calculateExperienceForNextLevel = (currentExperience) => {
     const level = Math.floor(Math.sqrt(currentExperience / 100));
-    return 100 * (level + 1) ** 2;
+    return 1 * (level + 1) ** 2;
   };
 
   const addExperience = (amount) => {

@@ -58,7 +58,7 @@ export const LandingPage = ({ navigation, handleLogin }) => {
 				.then((response) => {
 					handleLogin(response.user_id)
 					navigation.navigate('Main');
-					navigation.navigate('Profile');
+					navigation.navigate('Settings');
 				})
 				.catch((error) => {
 					console.error('Error registering user:', error);
