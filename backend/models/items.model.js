@@ -11,7 +11,7 @@ exports.fetchItems = () => {
 
 exports.fetchUserItems = (id) => {
     return db.query(`
-      SELECT ui.user_item_row_id, ui.user_id, ui.item_id, ui.display_location, ai.item_name, ai.item_img
+      SELECT ui.user_id, ui.users_item_row_id, ui.item_id, ui.display_location, ai.item_name, ai.item_img
       FROM usersItems ui
       JOIN availableItems ai ON ui.item_id = ai.item_id
       WHERE ui.user_id = $1
