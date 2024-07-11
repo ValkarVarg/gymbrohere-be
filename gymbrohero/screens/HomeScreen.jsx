@@ -33,7 +33,6 @@ const HomeScreen = ({ navigation, userId }) => {
   useFocusEffect(
     React.useCallback(() => {
       const fetchItems = async () => {
-        console.log("runs")
         try {
           if (!userId) return;
           const items = await fetchUserItems(userId);
