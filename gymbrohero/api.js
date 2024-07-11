@@ -97,6 +97,7 @@ export function fetchWorkouts(user_id) {
 }
 
 export function fetchIndividualWorkouts(workout_plan_id) {
+	console.log(workout_plan_id)
 	return gymBroHeroApi
 		.get(`/individualworkouts/${workout_plan_id}`)
 		.then(({ data }) => {
@@ -104,6 +105,7 @@ export function fetchIndividualWorkouts(workout_plan_id) {
 		})
 		.catch((err) => {
 			console.log(err);
+			console.log('in fetch indi workouts')
 		});
 }
 
@@ -125,10 +127,15 @@ export function postWorkoutId(workout) {
 }
 
 export function postWorkoutPlan(planid, workoutPlan) {
+	console.log(planid, workoutPlan, 'in post workout')
 	return gymBroHeroApi
 	  .post(`/workouts/${planid}`, workoutPlan)
 	  .then(({ data }) => {
+		console.log(data, 'data from post')
 		return data  })
+		.catch((err) => {
+			console.log(err)
+		})
 	  }
 
 export function postUserItem(user_id, payload) {

@@ -45,19 +45,17 @@ export const CreateWorkoutScreen = ({ userId }) => {
 			<Formik
 				initialValues={initialValues}
 				onSubmit={(values, { resetForm }) => {
-					console.log(newIndividualWorkout)
-					console.log(values)
 					postWorkoutId(values.workout)
 						.then((data) => {
 							return [
 								newIndividualWorkout.map((obj, index) => ({
-									exercise_id: obj.exerciseId,
-									set_id: obj.setId,
-									reps: obj.workoutReps,
-									weight: obj.workoutWeight,
-									order_id: index,
+									exercise_id: Number(obj.exerciseId),
+									set_id: Number(obj.setId),
+									reps: Number(obj.workoutReps),
+									weight: Number(obj.workoutWeight),
+									order_id: index + 1 
 								})),
-								data.workout.user_id,
+								data.workout.user_id
 							];
 						})
 						.then(([IndividualWorkout, planId]) => {

@@ -56,7 +56,6 @@ export const Navbar = ({ userId }) => {
         </Tab.Screen>
         <Tab.Screen
           name="Workouts"
-          component={WorkoutsScreen}
           options={{
             tabBarIcon: () => (
               <Image
@@ -65,7 +64,7 @@ export const Navbar = ({ userId }) => {
               />
             ),
           }}
-        />
+        >{(props) => <WorkoutsScreen {...props} userId={userId} />}</Tab.Screen>
         <Tab.Screen
           name="CreateWorkout"
           options={{
