@@ -15,7 +15,6 @@ export const CreateSet = (props) => {
 				initialValues={initialValues}
 				onSubmit={async (values) => {
 					await new Promise((r) => setTimeout(r, 500));
-					alert(JSON.stringify(values, null, 2));
 					props.setnewIndividualWorkout((otherExercises) => {
 						return [...otherExercises, ...values.sets];
 					});
